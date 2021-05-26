@@ -1,9 +1,7 @@
 import { Request, Response, Router } from 'express';
-
+import SpecialistController from '../../controllers/SpecialistController';
 const routesSpecialist = Router();
 
-routesSpecialist.get('/register', (req: Request, res: Response) => {
-  res.send('Register Router');
-});
+routesSpecialist.get('/', SpecialistController.index);
 
 export { routesSpecialist };

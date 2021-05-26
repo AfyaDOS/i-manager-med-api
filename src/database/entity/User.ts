@@ -4,7 +4,10 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
+  OneToMany
 } from 'typeorm';
+
+import Specialist from './Specialist';
 
 @Entity('users')
 class User {
@@ -25,6 +28,9 @@ class User {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @OneToMany(type => Specialist, users => User)
+  specialist: Specialist[];
 }
 
 export default User;
