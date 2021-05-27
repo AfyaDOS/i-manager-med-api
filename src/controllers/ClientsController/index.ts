@@ -2,7 +2,7 @@ import {
   Request, Response,
 } from 'express';
 import {
-  getRepository,
+  getRepository, QueryFailedError,
 } from 'typeorm';
 import Client from '../../database/entity/Client';
 import Address from '../../database/entity/Address';
@@ -19,10 +19,12 @@ class ClientsController {
 
       const newAddress = new Address();
 
-      if (typeof address !== 'object') throw new Error('O endereço precisa ser um objeto ');
-
       Object.assign(newAddress, {
         ...address,
+      });
+
+      Object.entries(newAddress).forEach(([key, value]) => {
+        if (!value) throw new Error(`O campo ${key} é obrigatório !!`);
       });
 
       const {
@@ -47,6 +49,13 @@ class ClientsController {
 
       return res.status(200).end();
     } catch (error) {
+      if (error instanceof QueryFailedError) {
+        return res.status(400).json({
+          error: true,
+          message: error.detail,
+        });
+      }
+
       return res.status(400).json({
         error: true,
         message: error.message,
