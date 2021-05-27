@@ -14,6 +14,4 @@ routes.use('/clients', routesClients);
 routes.use('/specialist', routesSpecialist);
 routes.use('/specialties', routesSpecialties);
 
-
-
 export { routes };
