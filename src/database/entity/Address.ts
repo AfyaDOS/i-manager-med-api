@@ -7,26 +7,44 @@ import {
 } from 'typeorm';
 
 @Entity('address')
-class Client {
+class Address {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'text', nullable: false })
+  @Column({
+    type: 'text',
+    nullable: false,
+  })
   city: number;
 
-  @Column({ type: 'text', nullable: false })
+  @Column({
+    type: 'text',
+    nullable: false,
+  })
   state: string;
 
-  @Column({ type: 'text', nullable: false })
+  @Column({
+    type: 'text',
+    nullable: false,
+  })
   street: string;
 
-  @Column({ type: 'text', nullable: false })
+  @Column({
+    type: 'text',
+    nullable: false,
+  })
   district: string;
 
-  @Column({ type: 'long', nullable: false })
+  @Column({
+    type: 'decimal',
+    nullable: false,
+  })
   numberOf: number;
 
-  @Column({ type: 'long', nullable: false })
+  @Column({
+    type: 'decimal',
+    nullable: false,
+  })
   postcode: number;
 
   @CreateDateColumn()
@@ -36,4 +54,4 @@ class Client {
   updated_at: Date;
 }
 
-export default Client;
+export default Address;

@@ -1,71 +1,91 @@
-import { Request, Response } from 'express';
-import { getRepository } from 'typeorm';
+import {
+  Request, Response,
+} from 'express';
+import {
+  getRepository,
+} from 'typeorm';
 import bcrypt from 'bcrypt';
 
 import User from '../database/entity/User';
 
 class UserController {
-    async index(req: Request, res: Response) {
-        const repository = getRepository(User);
+  async index(req: Request, res: Response) {
+    const repository = getRepository(User);
 
-        const userExists = await repository.find();
+    const userExists = await repository.find();
 
-        //return res.send({ userId: req.userId })
-        return res.status(200).json(userExists);
-    };
-    async createUser(req: Request, res: Response) {
-        const repository = getRepository(User);
-        const { email, password, name } = req.body;
+    // return res.send({ userId: req.userId })
+    return res.status(200).json(userExists);
+  }
 
-        const passwordCrypt = bcrypt.hashSync(password, 8);
+  async createUser(req: Request, res: Response) {
+    const repository = getRepository(User);
+    const {
+      email, password, name,
+    } = req.body;
 
-        const userExists = await repository.findOne({ where: { email } });
+    const passwordCrypt = bcrypt.hashSync(password, 8);
 
-        if (userExists) {
-            return res.status(409).send('Email já cadastrado')
-        }
+    const userExists = await repository.findOne({
+      where: {
+        email,
+      },
+    });
 
-        const user = repository.create({ name, email, password: passwordCrypt })
-        await repository.save(user)
+    if (userExists) {
+      return res.status(409).send('Email já cadastrado');
+    }
 
-        return res.json(user);
-    };
-    async updateUser(req: Request, res: Response) {
-        const repository = getRepository(User);
-        const { id } = req.params;
+    const user = repository.create({
+      name, email, password: passwordCrypt,
+    });
 
-        const userExists = await repository.findOne({ where: { id } });
+    await repository.save(user);
 
+    return res.json(user);
+  }
 
-        if (userExists) {
-            return res.status(404).send('Usuário não encontrado')
+  async updateUser(req: Request, res: Response) {
+    const repository = getRepository(User);
+    const {
+      id,
+    } = req.params;
 
-        };
+    const userExists = await repository.findOne({
+      where: {
+        id,
+      },
+    });
 
-        // userExists.name = name;
+    if (userExists) {
+      return res.status(404).send('Usuário não encontrado');
+    }
 
-        // await userExists.save(user);
+    // userExists.name = name;
 
-    };
-    async deleteUser(req: Request, res: Response) {
-        const repository = getRepository(User);
-        const { id } = req.params;
+    // await userExists.save(user);
+  }
 
-        const userExists = await repository.findOne({ where: { id } });
+  async deleteUser(req: Request, res: Response) {
+    const repository = getRepository(User);
+    const {
+      id,
+    } = req.params;
 
-        if (!userExists) {
-            return res.status(404).send('Usuário não encontrado')
-        }
+    const userExists = await repository.findOne({
+      where: {
+        id,
+      },
+    });
 
-        await repository.delete(id)
+    if (!userExists) {
+      return res.status(404).send('Usuário não encontrado');
+    }
 
-        return res.status(200).send('Usuário deletado com sucesso')
+    await repository.delete(id);
 
-
-
-
-
-    };
-};
+    return res.status(200).send('Usuário deletado com sucesso');
+  }
+}
 
 export default new UserController();

@@ -1,9 +1,16 @@
-import { Request, Response, Router } from 'express';
+import {
+  Router,
+} from 'express';
+import {
+  ClientsController,
+} from '../../controllers/ClientsController';
 
 const routesClients = Router();
 
-routesClients.get('/register', (req: Request, res: Response) => {
-  res.send('Register Router');
-});
+const clientsControlle = new ClientsController();
 
-export { routesClients };
+routesClients.post('/register', clientsControlle.set);
+
+export {
+  routesClients,
+};
