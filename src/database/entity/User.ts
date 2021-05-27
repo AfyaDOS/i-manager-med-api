@@ -4,7 +4,7 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-  OneToMany
+  OneToMany,
 } from 'typeorm';
 
 import Specialist from './Specialist';
@@ -29,7 +29,10 @@ class User {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @OneToMany(type => Specialist, users => User)
+  @OneToMany((type) => Specialist, (users) => User, {
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+  })
   specialist: Specialist[];
 }
 
