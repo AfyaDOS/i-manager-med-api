@@ -25,7 +25,7 @@ class LoginController {
     if (!user) {
       return res.status(401).send('usuário não autorizado');
     }
-    const passwordIsValid = await bcrypt.compare(password, user?.password);
+    const passwordIsValid = await bcrypt.compare(password, user?.password || '');
 
     if (!passwordIsValid) {
       return res.status(401).send('usuário não autorizado');
