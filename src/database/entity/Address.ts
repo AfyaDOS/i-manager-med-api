@@ -15,7 +15,7 @@ class Address {
     type: 'text',
     nullable: false,
   })
-  city: number;
+  city: string;
 
   @Column({
     type: 'text',
@@ -48,10 +48,10 @@ class Address {
   postcode: number;
 
   @CreateDateColumn()
-  created_at: Date;
+  created_at?: Date;
 
   @UpdateDateColumn()
-  updated_at: Date;
+  updated_at?: Date;
 }
 
 export default Address;

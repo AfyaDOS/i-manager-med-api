@@ -1,7 +1,8 @@
 {
     "env": {
         "es2021": true,
-        "node": true
+        "node": true,
+        "jest": true
     },
     "extends": [
         "airbnb-base"
@@ -21,6 +22,7 @@
         "import/extensions": "off",
         "class-methods-use-this": "off",
         "camelcase": "off",
-        "object-curly-newline": ["error", "always"]
+        "object-curly-newline": ["error", "always"],
+        "import/no-extraneous-dependencies": "off"
     }
 }

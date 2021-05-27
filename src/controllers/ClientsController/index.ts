@@ -45,7 +45,7 @@ class ClientsController {
 
       await clientRepository.save(client);
 
-      return res.status(200).end();
+      return res.status(201).end();
     } catch (error) {
       return res.status(400).json({
         error: true,
