@@ -11,9 +11,6 @@ routes.use('/login', routesLogin);
 routes.use('/users', routesUsers);
 routes.use('/clients', routesClients);
 routes.use('/specialist', routesSpecialist);
-<<<<<<< HEAD
-=======
 routes.use('/specialties', routesSpecialties);
->>>>>>> 3ec61c9564992c790817bff183cad63dbf0eeada
 
 export { routes };
