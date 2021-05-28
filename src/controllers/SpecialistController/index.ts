@@ -60,36 +60,28 @@ class SpecialistController {
   async updateSpecialist(req: Request, res: Response) {
     try {
       const repositorySpecialist = getRepository(Specialist);
-      const { name, email, registry, phone, cell } = req.body;
+      const data = req.body;
       const { id } = req.params;
 
       const specialist = await repositorySpecialist.findOne(id);
 
+      if (!specialist) throw new Error('Especialista não encontrado.');
+
       const registryExists = await repositorySpecialist.findOne({
-        where: { registry },
+        where: { registry: data?.registry },
       });
 
       if (registryExists) {
         return res.status(409).send('Registro já cadastrado');
       }
 
-      // @ts-ignore
-      specialist.name = name;
-      // @ts-ignore
-      specialist.email = email;
-      // @ts-ignore
-      specialist.registry = registry;
-      // @ts-ignore
-      specialist.phone = phone;
-      // @ts-ignore
-      specialist.cell = cell;
+      Object.assign(specialist, { ...data });
 
-      // @ts-ignore
       await repositorySpecialist.save(specialist);
 
       return res.status(200).json(specialist);
     } catch (error) {
-      return res.status(404).json(error);
+      return res.status(404).json({ error: true, message: error.message });
     }
   }
 
