@@ -1,20 +1,6 @@
 import 'reflect-metadata';
-import express from 'express';
-import {
-  routes,
-} from './routes';
-import './database/index';
+import app from './server';
 
-const app = express();
+const port = process.env.PORT || 5000;
 
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('../swagger.json');
-
-app.use(express.json());
-
-app.use('/documentation', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-app.use(routes);
-
-app.listen(5000, () => console.log('Server linener in port 5000'));
-
-export default app;
+app.listen(port, () => console.log(`Server linener in port ${port}`));

@@ -7,7 +7,7 @@
     "dev": "ts-node-dev --respawn --transpile-only --no-notify --files src/index.ts",
     "typeorm": "ts-node-dev  ./node_modules/typeorm/cli.js",
     "sync": "typeorm schema:sync",
-    "test": "cross-env NODE_ENV=test jest --testTimeout=10000"
+    "test": "cross-env NODE_ENV=test jest --forceExit --detectOpenHandles  --watchAll --maxWorkers=1 --testTimeout=50000"
   },
   "dependencies": {
     "@types/jsonwebtoken": "^8.5.1",
@@ -26,6 +26,7 @@
     "@types/jest": "^26.0.23",
     "@types/node": "^15.6.1",
     "@types/supertest": "^2.0.11",
+    "@types/swagger-ui-express": "^4.1.2",
     "@typescript-eslint/eslint-plugin": "^4.25.0",
     "@typescript-eslint/parser": "^4.25.0",
     "cross-env": "^7.0.3",

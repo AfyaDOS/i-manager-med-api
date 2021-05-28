@@ -1,35 +1,22 @@
-import {
-  Request, Response,
-} from 'express';
-import {
-  getRepository, QueryFailedError,
-} from 'typeorm';
+import { Request, Response } from 'express';
+import { QueryFailedError } from 'typeorm';
 import Client from '../../database/entity/Client';
 import Address from '../../database/entity/Address';
 
 class ClientsController {
   async set(req: Request, res: Response) {
     try {
-      const {
-        name, cpf, email, phone, address,
-      } = req.body;
-
-      const clientRepository = getRepository(Client);
-      const addressRepository = getRepository(Address);
+      const { name, cpf, email, phone, address } = req.body;
 
       const newAddress = new Address();
 
-      Object.assign(newAddress, {
-        ...address,
-      });
+      Object.assign(newAddress, { ...address });
 
       Object.entries(newAddress).forEach(([key, value]) => {
         if (!value) throw new Error(`O campo ${key} é obrigatório !!`);
       });
 
-      const {
-        id,
-      } = await addressRepository.save(newAddress);
+      const { id } = await newAddress.save();
 
       const client = new Client();
 
@@ -45,7 +32,7 @@ class ClientsController {
         if (!value) throw new Error(`O campo ${key} é obrigatório !!`);
       });
 
-      await clientRepository.save(client);
+      await client.save();
 
       return res.status(201).end();
     } catch (error) {
@@ -64,6 +51,4 @@ class ClientsController {
   }
 }
 
-export {
-  ClientsController,
-};
+export { ClientsController };

@@ -1,4 +1,5 @@
 import {
+  BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
@@ -7,44 +8,26 @@ import {
 } from 'typeorm';
 
 @Entity('address')
-class Address {
+class Address extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id?: string;
 
-  @Column({
-    type: 'text',
-    nullable: false,
-  })
+  @Column({ type: 'text', nullable: false })
   city: string;
 
-  @Column({
-    type: 'text',
-    nullable: false,
-  })
+  @Column({ type: 'text', nullable: false })
   state: string;
 
-  @Column({
-    type: 'text',
-    nullable: false,
-  })
+  @Column({ type: 'text', nullable: false })
   street: string;
 
-  @Column({
-    type: 'text',
-    nullable: false,
-  })
+  @Column({ type: 'text', nullable: false })
   district: string;
 
-  @Column({
-    type: 'decimal',
-    nullable: false,
-  })
+  @Column({ type: 'decimal', nullable: false })
   numberOf: number;
 
-  @Column({
-    type: 'decimal',
-    nullable: false,
-  })
+  @Column({ type: 'decimal', nullable: false })
   postcode: number;
 
   @CreateDateColumn()

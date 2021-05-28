@@ -22,7 +22,7 @@
         "import/extensions": "off",
         "class-methods-use-this": "off",
         "camelcase": "off",
-        "object-curly-newline": ["error", "always"],
+        "object-curly-newline": ["error", { "multiline": true }],
         "import/no-extraneous-dependencies": "off"
     }
 }

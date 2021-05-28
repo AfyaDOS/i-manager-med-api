@@ -1,9 +1,5 @@
-import {
-  Request, Response,
-} from 'express';
-import {
-  getRepository,
-} from 'typeorm';
+import { Request, Response } from 'express';
+import { getRepository } from 'typeorm';
 import bcrypt from 'bcrypt';
 
 import User from '../database/entity/User';
@@ -20,25 +16,17 @@ class UserController {
 
   async createUser(req: Request, res: Response) {
     const repository = getRepository(User);
-    const {
-      email, password, name,
-    } = req.body;
+    const { email, password, name } = req.body;
 
     const passwordCrypt = bcrypt.hashSync(password, 8);
 
-    const userExists = await repository.findOne({
-      where: {
-        email,
-      },
-    });
+    const userExists = await repository.findOne({ where: { email } });
 
     if (userExists) {
       return res.status(409).send('Email já cadastrado');
     }
 
-    const user = repository.create({
-      name, email, password: passwordCrypt,
-    });
+    const user = repository.create({ name, email, password: passwordCrypt });
 
     await repository.save(user);
 
@@ -47,19 +35,15 @@ class UserController {
 
   async updateUser(req: Request, res: Response) {
     const repository = getRepository(User);
-    const {
-      id,
-    } = req.params;
+    const { id } = req.params;
 
-    const userExists = await repository.findOne({
-      where: {
-        id,
-      },
-    });
+    const userExists = await repository.findOne({ where: { id } });
 
     if (userExists) {
       return res.status(404).send('Usuário não encontrado');
     }
+
+    return res.status(200).end();
 
     // userExists.name = name;
 
@@ -68,15 +52,9 @@ class UserController {
 
   async deleteUser(req: Request, res: Response) {
     const repository = getRepository(User);
-    const {
-      id,
-    } = req.params;
+    const { id } = req.params;
 
-    const userExists = await repository.findOne({
-      where: {
-        id,
-      },
-    });
+    const userExists = await repository.findOne({ where: { id } });
 
     if (!userExists) {
       return res.status(404).send('Usuário não encontrado');

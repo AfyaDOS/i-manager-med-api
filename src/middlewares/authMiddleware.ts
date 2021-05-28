@@ -1,35 +1,23 @@
 import { Response, Request, NextFunction } from 'express';
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken';
 
-interface TokenPayload {
-    id: string;
-    iat: number;
-    exp: number;
-}
+export default function authMiddleware(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  const { authorization } = req.headers;
 
-export default function authMiddleware(req: Request, res: Response, next: NextFunction) {
+  if (!authorization) {
+    return res.sendStatus(401);
+  }
+  const token = authorization.replace('Bearer', '').trim();
 
-    const { authorization } = req.headers;
+  try {
+    jwt.verify(token, 'dotEnv');
 
-
-    if (!authorization) {
-        return res.sendStatus(401);
-    }
-    const token = authorization.replace('Bearer', '').trim();
-
-    try {
-        const data = jwt.verify(token, 'dotEnv');
-        const { id } = data as TokenPayload;
-
-        req.userId = id;
-
-        return next()
-
-
-    } catch {
-        return res.sendStatus(401);
-
-    }
-
-
+    return next();
+  } catch {
+    return res.sendStatus(401);
+  }
 }

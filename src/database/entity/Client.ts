@@ -1,4 +1,5 @@
 import {
+  BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
@@ -10,28 +11,20 @@ import {
 import Address from './Address';
 
 @Entity('clients')
-class Client {
+class Client extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id?: string;
 
-  @Column({
-    type: 'decimal', nullable: false, unique: true,
-  })
+  @Column({ type: 'decimal', nullable: false, unique: true })
   cpf: number;
 
-  @Column({
-    type: 'text', nullable: false,
-  })
+  @Column({ type: 'text', nullable: false })
   name: string;
 
-  @Column({
-    type: 'decimal', nullable: false,
-  })
+  @Column({ type: 'decimal', nullable: false })
   phone: number;
 
-  @Column({
-    type: 'text', nullable: false,
-  })
+  @Column({ type: 'text', nullable: false })
   email: string;
 
   @OneToOne(() => Address) @JoinColumn()
