@@ -6,15 +6,16 @@ import User from '../../database/entity/User';
 
 class SpecialistController {
   async index(req: Request, res: Response) {
+    
     try {
       const repositorySpecialist = getRepository(Specialist);
       const specialistExists = await repositorySpecialist.find({
         relations: ['user'],
-        where: {
-          user: {
-            id: req.userId,
-          },
-        },
+        // where: {
+        //   user: {
+        //     id: req.userId,
+        //   },
+        // },
       });
 
       return res.status(200).json(specialistExists);
@@ -32,7 +33,9 @@ class SpecialistController {
       const registryExists = await repositorySpecialist.findOne({
         where: { registry },
       });
-      const user = await repositoryUser.findOne(req.userId);
+
+      // adicionar id do usuario logado
+      const user = await repositoryUser.findOne();
 
       if (registryExists) {
         return res.status(409).send('Registro já cadastrado');
