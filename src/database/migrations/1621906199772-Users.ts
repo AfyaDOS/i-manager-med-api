@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 import {
   MigrationInterface, QueryRunner, Table,
 } from 'typeorm';
+=======
+import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+>>>>>>> 3ec61c9564992c790817bff183cad63dbf0eeada
 
 export class Users1621906199772 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {

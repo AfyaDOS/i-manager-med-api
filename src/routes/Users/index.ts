@@ -7,5 +7,7 @@ const routesUsers = Router();
 routesUsers.get('/', authMiddleware, UserController.index);
 routesUsers.post('/', UserController.createUser);
 routesUsers.delete('/:id', UserController.deleteUser);
+routesUsers.put('/:id', UserController.updateUser);
+
 
 export { routesUsers };

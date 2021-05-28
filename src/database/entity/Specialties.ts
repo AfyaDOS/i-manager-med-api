@@ -1,27 +1,22 @@
+import { type } from 'os';
 import {
   Column,
   CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-  OneToMany,
+  ManyToOne,
 } from 'typeorm';
 
 import Specialist from './Specialist';
 
-@Entity('users')
-class User {
+@Entity('specialties')
+class Specialties {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
-  name: string;
-
-  @Column()
-  email: string;
-
-  @Column()
-  password?: string;
+  specialty: string;
 
   @CreateDateColumn()
   created_at: Date;
@@ -29,11 +24,11 @@ class User {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @OneToMany((type) => Specialist, (users) => User, {
-    onUpdate: 'CASCADE',
+  @ManyToOne((type) => Specialist, (specialties) => Specialties, {
     onDelete: 'CASCADE',
-  }) // * obs
-  specialist: Specialist[];
+    onUpdate: 'CASCADE',
+  })
+  specialist: Specialist;
 }
 
-export default User;
+export default Specialties;
