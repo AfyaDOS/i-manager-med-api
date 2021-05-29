@@ -6,7 +6,6 @@ import User from '../../database/entity/User';
 
 class SpecialistController {
   async index(req: Request, res: Response) {
-    
     try {
       const repositorySpecialist = getRepository(Specialist);
       const specialistExists = await repositorySpecialist.find({

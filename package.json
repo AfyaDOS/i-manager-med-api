@@ -4,10 +4,11 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only --no-notify --files src/index.ts",
+    "dev": "set NODE_ENV=development&& ts-node-dev --respawn --transpile-only --no-notify --files src/index.ts",
     "typeorm": "ts-node-dev  ./node_modules/typeorm/cli.js",
     "sync": "typeorm schema:sync",
-    "test": "cross-env NODE_ENV=test jest --forceExit --detectOpenHandles  --watchAll --maxWorkers=1 --testTimeout=50000"
+    "test": "cross-env NODE_ENV=test jest --forceExit --detectOpenHandles  --watchAll --maxWorkers=1 --testTimeout=600000",
+    "coverage": "cross-env NODE_ENV=test jest --coverage --forceExit --detectOpenHandles  --watchAll --maxWorkers=1 --testTimeout=600000"
   },
   "dependencies": {
     "@types/jsonwebtoken": "^8.5.1",
@@ -16,6 +17,7 @@
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.6.0",
     "reflect-metadata": "^0.1.13",
+    "sqlite3": "^5.0.2",
     "swagger-ui-express": "^4.1.6",
     "typeorm": "^0.2.32",
     "uuidv4": "^6.2.8"

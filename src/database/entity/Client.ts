@@ -27,7 +27,11 @@ class Client extends BaseEntity {
   @Column({ type: 'text', nullable: false })
   email: string;
 
-  @OneToOne(() => Address) @JoinColumn()
+  @OneToOne(() => Address, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn()
   address: Address;
 
   @CreateDateColumn()

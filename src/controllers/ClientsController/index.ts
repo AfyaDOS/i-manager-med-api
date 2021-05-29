@@ -36,17 +36,15 @@ class ClientsController {
 
       return res.status(201).end();
     } catch (error) {
-      if (error instanceof QueryFailedError) {
-        return res.status(400).json({
-          error: true,
-          message: error.detail,
-        });
-      }
+      
+      // if (error instanceof QueryFailedError) {
+      //   return res.status(400).json({
+      //     error: true,
+      //     message: error.detail,
+      //   });
+      // }
 
-      return res.status(400).json({
-        error: true,
-        message: error.message,
-      });
+      return res.status(400).end()
     }
   }
 }
