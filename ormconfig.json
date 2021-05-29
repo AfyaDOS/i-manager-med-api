@@ -10,12 +10,8 @@
     "logging": false,
     "synchronize": false,
     "dropSchema": false,
-    "migrationsRun": true,
     "entities": [
       "src/database/entity/*.ts"
-    ],
-    "migrations": [
-      "src/database/migrations/*.ts"
     ]
   },
   {

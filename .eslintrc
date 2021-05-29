@@ -1,32 +1,28 @@
 {
-    "env": {
-        "es2021": true,
-        "node": true,
-        "jest": true
-    },
-    "extends": [
-        "airbnb-base"
-    ],
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "ecmaVersion": 12,
-        "sourceType": "module"
-    },
-    "plugins": [
-        "@typescript-eslint"
-    ],
-    "rules": {
-        "linebreak-style": ["error", "windows"],
-        "import/prefer-default-export": "off",
-        "import/no-unresolved": "off",
-        "import/extensions": "off",
-        "class-methods-use-this": "off",
-<<<<<<< HEAD
-        "camelcase": "off",
-        "object-curly-newline": ["error", { "multiline": true }],
-        "import/no-extraneous-dependencies": "off"
-=======
-        "camelcase": "off"
->>>>>>> 3ec61c9564992c790817bff183cad63dbf0eeada
-    }
+  "env": {
+      "es2021": true,
+      "node": true,
+      "jest": true
+  },
+  "extends": [
+      "airbnb-base"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+      "ecmaVersion": 12,
+      "sourceType": "module"
+  },
+  "plugins": [
+      "@typescript-eslint"
+  ],
+  "rules": {
+      "linebreak-style": ["error", "windows"],
+      "import/prefer-default-export": "off",
+      "import/no-unresolved": "off",
+      "import/extensions": "off",
+      "class-methods-use-this": "off",
+      "camelcase": "off",
+      "object-curly-newline": ["error", { "multiline": true }],
+      "import/no-extraneous-dependencies": "off"
+  }
 }

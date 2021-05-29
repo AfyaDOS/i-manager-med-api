@@ -35,6 +35,7 @@ class Address extends BaseEntity {
 
   @UpdateDateColumn()
   updated_at?: Date;
+
 }
 
 export default Address;

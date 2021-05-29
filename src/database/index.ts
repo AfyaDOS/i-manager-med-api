@@ -30,4 +30,4 @@ const createTypeormConn = {
   export {createTypeormConn};
 
 
-// createTypeormConn()
+createTypeormConn.create()
