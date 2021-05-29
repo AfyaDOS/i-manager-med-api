@@ -8,20 +8,10 @@ class SpecialtiesController {
   async index(req: Request, res: Response) {
     try {
       const repositorySpecialties = getRepository(Specialties);
-      const { idSpecialist } = req.params;
-
-      const SpecialtiesExists = await repositorySpecialties.find({
-        relations: ['specialist'],
-        where: {
-          specialist: {
-            id: idSpecialist,
-          },
-        },
-      });
-
+      const SpecialtiesExists = await repositorySpecialties.find();
       return res.status(200).json(SpecialtiesExists);
     } catch (error) {
-      return res.status(404).json(error);
+      return res.status(404).json({ error: true, message: error.message });
     }
   }
 
@@ -30,7 +20,7 @@ class SpecialtiesController {
       const repositorySpecialties = getRepository(Specialties);
       const repositorySpecialist = getRepository(Specialist);
       const { specialty } = req.body;
-      const { idSpecialist } = req.params;
+      const { idSpecialist } = req.body;
 
       const specialist = await repositorySpecialist.findOne(idSpecialist);
 
@@ -43,7 +33,7 @@ class SpecialtiesController {
 
       return res.status(200).json(specialties);
     } catch (error) {
-      return res.status(404).json(error);
+      return res.status(404).json({ error: true, message: error.message });
     }
   }
 
@@ -67,7 +57,7 @@ class SpecialtiesController {
 
       return res.status(200).json(specialties);
     } catch (error) {
-      return res.status(404).json(error);
+      return res.status(404).json({ error: true, message: error.message });
     }
   }
 
@@ -85,7 +75,7 @@ class SpecialtiesController {
 
       return res.status(200).send('Especialidade deletada com sucesso');
     } catch (error) {
-      return res.status(404).json(error);
+      return res.status(404).json({ error: true, message: error.message });
     }
   }
 }

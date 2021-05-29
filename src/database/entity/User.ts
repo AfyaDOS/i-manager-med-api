@@ -32,7 +32,7 @@ class User {
   @OneToMany((type) => Specialist, (users) => User, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
-  }) // * obs
+  })
   specialist: Specialist[];
 }
 

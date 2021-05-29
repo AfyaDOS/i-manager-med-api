@@ -11,7 +11,7 @@ class UserController {
       const userExists = await repository.find();
       return res.status(200).json(userExists);
     } catch (error) {
-      return res.status(404).json(error);
+      return res.status(404).json({ error: true, message: error.message });
     }
   }
 
@@ -34,7 +34,7 @@ class UserController {
 
       return res.status(200).json(user);
     } catch (error) {
-      return res.status(404).json(error);
+      return res.status(404).json({ error: true, message: error.message });
     }
   }
 
@@ -59,7 +59,7 @@ class UserController {
 
       return res.status(200).json(user);
     } catch (error) {
-      return res.status(404).json(error);
+      return res.status(404).json({ error: true, message: error.message });
     }
   }
 
@@ -76,7 +76,7 @@ class UserController {
 
       return res.status(200).send('Usuário deletado com sucesso');
     } catch (error) {
-      return res.status(404).json(error);
+      return res.status(404).json({ error: true, message: error.message });
     }
   }
 }
