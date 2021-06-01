@@ -66,9 +66,7 @@ class ClientsController {
     try {
       const clientsRepository = getRepository(Client);
 
-      const clients = await clientsRepository.find({
-        relations: ['address', 'bloodtype'],
-      });
+      const clients = await clientsRepository.find({ relations: ['address', 'bloodtype'] });
 
       if (clients.length === 0) throw new Error('Nenhum cliente cadastrado.');
 

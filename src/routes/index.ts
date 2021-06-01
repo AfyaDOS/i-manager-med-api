@@ -6,14 +6,16 @@ import { routesUsers } from './Users';
 import { routesSpecialties } from './Specialties';
 import authMiddleware from '../middlewares/authMiddleware';
 import { routesBloodType } from './BloodType';
+import { routesServices } from './Services';
 
 const routes = Router();
 
 routes.use('/login', routesLogin);
 routes.use('/users', routesUsers);
 routes.use('/clients', routesClients);
-routes.use('/specialist', authMiddleware, routesSpecialist);
+routes.use('/specialist', routesSpecialist);
 routes.use('/specialties', authMiddleware, routesSpecialties);
 routes.use('/bloodtype', routesBloodType);
+routes.use('/services', routesServices);
 
 export { routes };

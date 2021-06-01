@@ -29,9 +29,7 @@ class SpecialistController {
       const repositoryUser = getRepository(User);
       const { name, email, registry, phone, cell } = req.body;
 
-      const registryExists = await repositorySpecialist.findOne({
-        where: { registry },
-      });
+      const registryExists = await repositorySpecialist.findOne({ where: { registry } });
 
       // adicionar id do usuario logado
       const user = await repositoryUser.findOne();
@@ -69,9 +67,7 @@ class SpecialistController {
 
       if (!specialist) throw new Error('Especialista não encontrado.');
 
-      const registryExists = await repositorySpecialist.findOne({
-        where: { registry: data?.registry },
-      });
+      const registryExists = await repositorySpecialist.findOne({ where: { registry: data?.registry } });
 
       if (registryExists) {
         return res.status(409).send('Registro já cadastrado');
