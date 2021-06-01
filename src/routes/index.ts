@@ -12,8 +12,13 @@ const routes = Router();
 routes.use('/login', routesLogin);
 routes.use('/users', routesUsers);
 routes.use('/clients', routesClients);
+<<<<<<< HEAD
 routes.use('/specialist', authMiddleware, routesSpecialist);
 routes.use('/specialties', authMiddleware, routesSpecialties);
 routes.use('/bloodtype', routesBloodType);
+=======
+routes.use('/specialist', routesSpecialist);
+routes.use('/specialties', routesSpecialties);
+>>>>>>> db
 
 export { routes };

@@ -15,7 +15,8 @@ class LoginController {
       if (!user) {
         return res.status(401).send('usuário e/ou senha inválidos');
       }
-      const passwordIsValid = await bcrypt.compare(password, user?.password);
+      //@ts-ignore
+      const passwordIsValid = await bcrypt.compare(password, user.password);
 
       if (!passwordIsValid) {
         return res.status(401).send('usuário e/ou senha inválidos');
@@ -29,7 +30,7 @@ class LoginController {
 
       return res.status(200).json({ user, token });
     } catch (error) {
-      return res.status(404).json(error);
+      return res.status(404).json({ error: true, message: error.message });
     }
   }
 }

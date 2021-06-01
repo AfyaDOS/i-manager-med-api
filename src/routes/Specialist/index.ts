@@ -4,23 +4,9 @@ import authMiddleware from '../../middlewares/authMiddleware';
 
 const routesSpecialist = Router();
 
-routesSpecialist.get('/', authMiddleware, SpecialistController.index);
-
-routesSpecialist.post(
-  '/',
-  authMiddleware,
-  SpecialistController.createSpecialist,
-);
-
-routesSpecialist.put(
-  '/:id',
-  authMiddleware,
-  SpecialistController.updateSpecialist,
-);
-routesSpecialist.delete(
-  '/:id',
-  authMiddleware,
-  SpecialistController.deleteSpecialist,
-);
+routesSpecialist.get('/', SpecialistController.index);
+routesSpecialist.post('/', SpecialistController.createSpecialist);
+routesSpecialist.put('/:id', SpecialistController.updateSpecialist);
+routesSpecialist.delete('/:id', SpecialistController.deleteSpecialist);
 
 export { routesSpecialist };
