@@ -10,6 +10,8 @@ import {
   JoinColumn,
   BaseEntity,
   OneToOne,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 
 import User from './User';
@@ -49,10 +51,9 @@ class Specialist extends BaseEntity {
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @OneToMany(() => Specialties, (specialists) => specialists.specialist, {
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
-  })
+  @ManyToMany(() => Specialties, (specialists) => specialists.specialist)
+  @JoinTable()
+  @JoinColumn({ name: 'specialties' })
   specialties: Specialties[];
 
   @OneToOne(() => Address, {

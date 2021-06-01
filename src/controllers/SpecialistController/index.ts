@@ -27,6 +27,8 @@ class SpecialistController {
 
       const addressCreate = repositoryAddress.create(address);
       await repositoryAddress.save(addressCreate);
+      // @ts-ignore
+      const address_id = await repositoryAddress.findOne(addressCreate.id);
 
       const registryExists = await repositorySpecialist.findOne({
         where: { registry },
@@ -36,9 +38,6 @@ class SpecialistController {
         return res.status(409).send('Registro já cadastrado');
       }
 
-      const address_id = await repositoryAddress.findOne(addressCreate.id);
-      console.log(address_id.id);
-      // console.log(addressCreate.id);
       const specialist = repositorySpecialist.create({
         name,
         email,
@@ -60,6 +59,7 @@ class SpecialistController {
   async updateSpecialist(req: Request, res: Response) {
     try {
       const repositorySpecialist = getRepository(Specialist);
+      const repositoryAddress = getRepository(Address);
       const data = req.body;
       const { id } = req.params;
 
@@ -74,9 +74,13 @@ class SpecialistController {
         return res.status(409).send('Registro já cadastrado');
       }
 
-      Object.assign(specialist, { ...data });
-
+      const a = Object.assign(specialist, { ...data });
       await repositorySpecialist.save(specialist);
+
+      const address = await repositoryAddress.findOne(data.address_id.id);
+      await Object.assign(address, { ...data.address_id });
+      //@ts-ignore
+      await repositoryAddress.save(address);
 
       return res.status(200).json(specialist);
     } catch (error) {
