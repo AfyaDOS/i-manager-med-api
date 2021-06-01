@@ -6,12 +6,14 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
   ManyToOne,
+  BaseEntity,
+  JoinColumn,
 } from 'typeorm';
 
 import Specialist from './Specialist';
 
 @Entity('specialties')
-class Specialties {
+class Specialties extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -24,10 +26,11 @@ class Specialties {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @ManyToOne((type) => Specialist, (specialties) => Specialties, {
+  @ManyToOne((type) => Specialist, (specialist) => specialist.specialties, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
+  @JoinColumn({ name: 'specialist_id' })
   specialist: Specialist;
 }
 

@@ -8,13 +8,18 @@ import {
   ManyToOne,
   OneToMany,
   JoinColumn,
+  BaseEntity,
+  OneToOne,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 
 import User from './User';
 import Specialties from './Specialties';
+import Address from './Address';
 
 @Entity('specialists')
-class Specialist {
+class Specialist extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -43,13 +48,20 @@ class Specialist {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
+  @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @OneToMany((type) => Specialties, (specialists) => Specialist, {
+  @ManyToMany(() => Specialties, (specialists) => specialists.specialist)
+  @JoinTable()
+  @JoinColumn({ name: 'specialties' })
+  specialties: Specialties[];
+
+  @OneToOne(() => Address, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
-  specialties: Specialties[];
+  @JoinColumn({ name: 'address_id' })
+  address_id: string;
 }
 
 export default Specialist;
