@@ -74,7 +74,7 @@ class SpecialistController {
         return res.status(409).send('Registro já cadastrado');
       }
 
-      const a = Object.assign(specialist, { ...data });
+      Object.assign(specialist, { ...data });
       await repositorySpecialist.save(specialist);
 
       const address = await repositoryAddress.findOne(data.address_id.id);
