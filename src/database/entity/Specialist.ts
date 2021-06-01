@@ -9,10 +9,12 @@ import {
   OneToMany,
   JoinColumn,
   BaseEntity,
+  OneToOne,
 } from 'typeorm';
 
 import User from './User';
 import Specialties from './Specialties';
+import Address from './Address';
 
 @Entity('specialists')
 class Specialist extends BaseEntity {
@@ -52,6 +54,13 @@ class Specialist extends BaseEntity {
     onUpdate: 'CASCADE',
   })
   specialties: Specialties[];
+
+  @OneToOne(() => Address, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn({ name: 'address_id' })
+  address_id: string;
 }
 
 export default Specialist;

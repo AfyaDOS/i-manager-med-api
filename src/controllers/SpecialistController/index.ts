@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
+import Address from '../../database/entity/Address';
 
 import Specialist from '../../database/entity/Specialist';
 import Specialties from '../../database/entity/Specialties';
@@ -7,10 +8,9 @@ import Specialties from '../../database/entity/Specialties';
 class SpecialistController {
   async index(req: Request, res: Response) {
     try {
-      const { id } = req.body;
       const repositorySpecialist = getRepository(Specialist);
       const specialtist = await repositorySpecialist.find({
-        relations: ['specialties'],
+        relations: ['specialties', 'address_id'],
       });
       return res.status(200).json(specialtist);
     } catch (error) {
@@ -21,14 +21,24 @@ class SpecialistController {
   async createSpecialist(req: Request, res: Response) {
     try {
       const repositorySpecialist = getRepository(Specialist);
-      const { name, email, registry, phone, cell, specialties } = req.body;
+      const repositoryAddress = getRepository(Address);
+      const { name, email, registry, phone, cell, specialties, address } =
+        req.body;
+
+      const addressCreate = repositoryAddress.create(address);
+      await repositoryAddress.save(addressCreate);
 
       const registryExists = await repositorySpecialist.findOne({
         where: { registry },
       });
+
       if (registryExists) {
         return res.status(409).send('Registro já cadastrado');
       }
+
+      const address_id = await repositoryAddress.findOne(addressCreate.id);
+      console.log(address_id.id);
+      // console.log(addressCreate.id);
       const specialist = repositorySpecialist.create({
         name,
         email,
@@ -36,8 +46,11 @@ class SpecialistController {
         phone,
         cell,
         specialties,
+        address_id: address_id?.id,
       });
+
       await repositorySpecialist.save(specialist);
+
       return res.status(200).json(specialist);
     } catch (error) {
       return res.status(404).json({ error: true, message: error.message });
