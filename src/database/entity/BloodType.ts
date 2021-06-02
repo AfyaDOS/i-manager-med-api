@@ -18,7 +18,6 @@ export enum EBlood {
   "AB-",
 }
 
-
 @Entity('bloodtype')
 class BloodType extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')

@@ -66,13 +66,50 @@ class ClientsController {
     try {
       const clientsRepository = getRepository(Client);
 
-      const clients = await clientsRepository.find({
-        relations: ['address', 'bloodtype'],
-      });
+      const clients = await clientsRepository.find({ relations: ['address', 'bloodtype'] });
 
       if (clients.length === 0) throw new Error('Nenhum cliente cadastrado.');
 
       return res.status(200).json(clients);
+    } catch (error) {
+      return res.status(400).json({ error: true, message: error.message });
+    }
+  }
+
+  async update(req: Request, res: Response) {
+    try {
+      const data = req.body;
+
+      const { id } = req.params;
+
+      const clientRepository = getRepository(Client);
+      const addressRepository = getRepository(Address);
+
+      const client = await clientRepository.findOne(id, { relations: ['address'] });
+
+      if (!client) {
+        return res.status(400).json({ error: true, message: 'Cliente não encontrado.' });
+      }
+
+      const address = await addressRepository.findOne(client.address.id);
+
+      if (!address) {
+        return res.status(400).json({ error: true, message: 'Endereço não encontrado.' });
+      }
+
+      const newAddress = data.address;
+
+      delete data.address;
+
+      Object.assign(address, newAddress);
+
+      Object.assign(client, data);
+
+      await clientRepository.save(client);
+
+      await addressRepository.save(address);
+
+      return res.status(200).end();
     } catch (error) {
       return res.status(400).json({ error: true, message: error.message });
     }

@@ -77,9 +77,7 @@ class SpecialistController {
       await repositorySpecialist.save(specialist);
 
       const address = await repositoryAddress.findOne(data.address_id.id);
-      console.log(data.address_id.id);
-      const abc = await Object.assign(address, { ...data.address_id });
-      console.log(address);
+      await Object.assign(address, { ...data.address_id });
       // @ts-ignore
       await repositoryAddress.save(address);
 
