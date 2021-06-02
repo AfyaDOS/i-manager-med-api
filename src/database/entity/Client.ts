@@ -9,6 +9,8 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import Address from './Address';
+import BloodType from './BloodType';
+
 
 @Entity('clients')
 class Client extends BaseEntity {
@@ -27,8 +29,19 @@ class Client extends BaseEntity {
   @Column({ type: 'text', nullable: false })
   email: string;
 
-  @OneToOne(() => Address) @JoinColumn()
+  @OneToOne(() => Address, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn()
   address: Address;
+
+  @OneToOne(() => BloodType, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn()
+  bloodtype: BloodType;
 
   @CreateDateColumn()
   created_at?: Date;
