@@ -1,4 +1,5 @@
 import request from 'supertest';
+import { createConnection, createConnections } from 'typeorm';
 import { createTypeormConn } from '../../src/database';
 import app from '../../src/server';
 import { MockClient } from '../../__mocks__';
@@ -7,6 +8,8 @@ jest.useFakeTimers();
 
 describe('Post Endpoints', () => {
   beforeAll((done) => {
+    // createConnections().then(() => done()).catch((err) => done(err));
+
     createTypeormConn
       .create()
       .then(() => done())

@@ -75,6 +75,45 @@ class ClientsController {
       return res.status(400).json({ error: true, message: error.message });
     }
   }
+
+  async update(req: Request, res: Response) {
+    try {
+      const data = req.body;
+
+      const { id } = req.params;
+
+      const clientRepository = getRepository(Client);
+      const addressRepository = getRepository(Address);
+
+      const client = await clientRepository.findOne(id, { relations: ['address'] });
+
+      if (!client) {
+        return res.status(400).json({ error: true, message: 'Cliente não encontrado.' });
+      }
+
+      const address = await addressRepository.findOne(client.address.id);
+
+      if (!address) {
+        return res.status(400).json({ error: true, message: 'Endereço não encontrado.' });
+      }
+
+      const newAddress = data.address;
+
+      delete data.address;
+
+      Object.assign(address, newAddress);
+
+      Object.assign(client, data);
+
+      await clientRepository.save(client);
+
+      await addressRepository.save(address);
+
+      return res.status(200).end();
+    } catch (error) {
+      return res.status(400).json({ error: true, message: error.message });
+    }
+  }
 }
 
 export { ClientsController };
