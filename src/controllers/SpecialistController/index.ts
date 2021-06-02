@@ -3,7 +3,6 @@ import { getRepository } from 'typeorm';
 import Address from '../../database/entity/Address';
 
 import Specialist from '../../database/entity/Specialist';
-import Specialties from '../../database/entity/Specialties';
 
 class SpecialistController {
   async index(req: Request, res: Response) {
@@ -78,8 +77,10 @@ class SpecialistController {
       await repositorySpecialist.save(specialist);
 
       const address = await repositoryAddress.findOne(data.address_id.id);
-      await Object.assign(address, { ...data.address_id });
-      //@ts-ignore
+      console.log(data.address_id.id);
+      const abc = await Object.assign(address, { ...data.address_id });
+      console.log(address);
+      // @ts-ignore
       await repositoryAddress.save(address);
 
       return res.status(200).json(specialist);
