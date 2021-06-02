@@ -33,3 +33,4 @@
     "dropSchema": false,
     "entities": ["src/database/entity/*.ts"]
   }
+]
