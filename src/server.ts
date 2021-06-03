@@ -1,8 +1,8 @@
-import './database/index';
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
 import { routes } from './routes';
-import swaggerDocument from '../swagger';
+import './database/index';
+import swaggerDocument from '../swagger.json';
 
 const app = express();
 

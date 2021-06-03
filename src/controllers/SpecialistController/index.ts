@@ -9,7 +9,9 @@ class SpecialistController {
   async index(req: Request, res: Response) {
     try {
       const repositorySpecialist = getRepository(Specialist);
-      const specialtist = await repositorySpecialist.find({ relations: ['specialties', 'address_id'] });
+      const specialtist = await repositorySpecialist.find({
+        relations: ['specialties', 'address_id'],
+      });
       return res.status(200).json(specialtist);
     } catch (error) {
       return res.status(404).json({ error: true, message: error.message });
@@ -20,7 +22,8 @@ class SpecialistController {
     try {
       const repositorySpecialist = getRepository(Specialist);
       const repositoryAddress = getRepository(Address);
-      const { name, email, registry, phone, cell, specialties, address } = req.body;
+      const { name, email, registry, phone, cell, specialties, address } =
+        req.body;
 
       const addressCreate = repositoryAddress.create(address);
       await repositoryAddress.save(addressCreate);
@@ -72,7 +75,7 @@ class SpecialistController {
 
       const address = await repositoryAddress.findOne(data.address_id.id);
       await Object.assign(address, { ...data.address_id });
-      // @ts-ignore
+      //@ts-ignore
       await repositoryAddress.save(address);
 
       return res.status(200).json(specialist);
