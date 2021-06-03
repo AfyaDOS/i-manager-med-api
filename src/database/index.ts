@@ -37,3 +37,4 @@ const connection = {
   },
 };
 export default connection;
+connection.create();

@@ -8,10 +8,10 @@ import typeorm from '../../database/index';
 class UserController {
   async index(req: Request, res: Response) {
     try {
-      await typeorm.create();
+      // await typeorm.create();
       const repository = getRepository(User);
       const userExists = await repository.find();
-      await typeorm.close();
+      // await typeorm.close();
       return res.status(200).json(userExists);
     } catch (error) {
       return res.status(404).json({ error: true, message: error.message });
@@ -20,8 +20,6 @@ class UserController {
 
   async createUser(req: Request, res: Response) {
     try {
-      await typeorm.create();
-
       const repository = getRepository(User);
       const { email, password, name } = req.body;
 
@@ -36,8 +34,6 @@ class UserController {
       const user = repository.create({ name, email, password: passwordCrypt });
 
       await repository.save(user);
-      await typeorm.close();
-
       return res.status(200).json(user);
     } catch (error) {
       return res.status(404).json({ error: true, message: error.message });
