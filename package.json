@@ -4,10 +4,10 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "set NODE_ENV=only&& ts-node-dev --respawn --transpile-only --no-notify --files src/index.ts",
+    "dev": "ts-node-dev --respawn --transpile-only --no-notify --files src/index.ts",
     "typeorm": "ts-node-dev  ./node_modules/typeorm/cli.js",
     "sync": "typeorm schema:sync",
-    "test": "cross-env NODE_ENV=development jest --runInBand --forceExit --detectOpenHandles  --watchAll --testTimeout=60000",
+    "test": "cross-env jest --runInBand --forceExit --detectOpenHandles  --watchAll --testTimeout=60000",
     "coverage": "cross-env NODE_ENV=development jest --coverage --forceExit --detectOpenHandles  --watchAll --maxWorkers=1 --testTimeout=60000"
   },
   "dependencies": {

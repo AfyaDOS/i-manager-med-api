@@ -1,10 +1,19 @@
-import { getConnectionOptions, createConnection, getConnection } from 'typeorm';
+import { createConnection, getConnection } from 'typeorm';
 
-const createTypeormConn = {
+const connection = {
   async create() {
-    const connectionOptions = await getConnectionOptions(process.env.NODE_ENV);
-
-    return createConnection({ ...connectionOptions, name: 'default' });
+    return createConnection({
+      type: 'postgres',
+      host: 'tuffi.db.elephantsql.com',
+      url: 'postgres://xhmkdamg:koESJwiMq-deJ_r73f5KO3AAbFh4mNfr@tuffi.db.elephantsql.com/xhmkdamg',
+      port: 5432,
+      username: 'xhmkdamg',
+      password: 'koESJwiMq-deJ_r73f5KO3AAbFh4mNfr',
+      database: 'xhmkdamg',
+      logging: false,
+      synchronize: false,
+      entities: ['src/database/entity/*.ts'],
+    });
   },
 
   async close() {
@@ -13,11 +22,11 @@ const createTypeormConn = {
 
   async clear() {
     try {
-      const connection = getConnection('default');
-      const entities = connection.entityMetadatas;
+      const connection2 = getConnection('default');
+      const entities = connection2.entityMetadatas;
 
       const promises = entities.map(async (entity) => {
-        const repository = connection.getRepository(entity.name);
+        const repository = connection2.getRepository(entity.name);
         return repository.query(`DELETE FROM ${entity.tableName}`);
       });
 
@@ -27,6 +36,4 @@ const createTypeormConn = {
     }
   },
 };
-export { createTypeormConn };
-
-createTypeormConn.create();
+export default connection;

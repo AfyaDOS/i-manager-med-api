@@ -11,7 +11,7 @@ import { routesServices } from './Services';
 const routes = Router();
 
 routes.use('/login', routesLogin);
-routes.use('/users', authMiddleware, routesUsers);
+routes.use('/users', routesUsers);
 routes.use('/clients', routesClients);
 routes.use('/specialist', routesSpecialist);
 routes.use('/specialties', authMiddleware, routesSpecialties);

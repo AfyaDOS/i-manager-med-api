@@ -1,0 +1,36 @@
+[
+  {
+    "name": "only",
+    "type": "postgres",
+    "host": "tuffi.db.elephantsql.com",
+    "port": 5432,
+    "username": "xhmkdamg",
+    "password": "koESJwiMq-deJ_r73f5KO3AAbFh4mNfr",
+    "database": "xhmkdamg",
+    "logging": false,
+    "synchronize": false,
+    "entities": ["src/database/entity/*.ts"]
+  },
+  {
+    "name": "development",
+    "type": "postgres",
+    "host": "127.0.0.1",
+    "port": 5432,
+    "username": "postgres",
+    "password": "ativer470",
+    "database": "afyacourse",
+    "logging": false,
+    "synchronize": false,
+    "dropSchema": false,
+    "entities": ["src/database/entity/*.ts"]
+  },
+  {
+    "name": "test",
+    "type": "sqlite",
+    "database": "database.test.db",
+    "logging": false,
+    "synchronize": false,
+    "dropSchema": false,
+    "entities": ["src/database/entity/*.ts"]
+  }
+]
