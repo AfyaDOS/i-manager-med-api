@@ -1,19 +1,10 @@
-import { createConnection, getConnection } from 'typeorm';
+import { createConnection, getConnection, getConnectionOptions } from 'typeorm';
 
 const connection = {
   async create() {
-    return createConnection({
-      type: 'postgres',
-      host: 'tuffi.db.elephantsql.com',
-      url: 'postgres://xhmkdamg:koESJwiMq-deJ_r73f5KO3AAbFh4mNfr@tuffi.db.elephantsql.com/xhmkdamg',
-      port: 5432,
-      username: 'xhmkdamg',
-      password: 'koESJwiMq-deJ_r73f5KO3AAbFh4mNfr',
-      database: 'xhmkdamg',
-      logging: false,
-      synchronize: false,
-      entities: ['src/database/entity/*.ts'],
-    });
+    const connectionOptions = await getConnectionOptions(process.env.NODE_ENV);
+
+    return createConnection({ ...connectionOptions, name: 'default' });
   },
 
   async close() {
@@ -37,4 +28,5 @@ const connection = {
   },
 };
 export default connection;
+
 connection.create();
