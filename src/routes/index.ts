@@ -7,6 +7,7 @@ import { routesSpecialties } from './Specialties';
 import authMiddleware from '../middlewares/authMiddleware';
 import { routesBloodType } from './BloodType';
 import { routesServices } from './Services';
+import { routesMedRecord } from './MedRecord';
 
 const routes = Router();
 
@@ -17,5 +18,6 @@ routes.use('/specialist', routesSpecialist);
 routes.use('/specialties', authMiddleware, routesSpecialties);
 routes.use('/bloodtype', routesBloodType);
 routes.use('/services', routesServices);
+routes.use('/medrecord', routesMedRecord);
 
 export { routes };
