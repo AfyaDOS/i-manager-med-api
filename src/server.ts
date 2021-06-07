@@ -1,10 +1,13 @@
 import './database/index';
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
+import cors from 'cors';
 import { routes } from './routes';
 import swaggerDocument from '../swagger';
 
 const app = express();
+
+app.use(cors());
 
 app.use(express.json());
 

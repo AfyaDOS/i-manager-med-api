@@ -3,7 +3,6 @@ import { getRepository } from 'typeorm';
 import bcrypt from 'bcrypt';
 
 import User from '../../database/entity/User';
-import typeorm from '../../database/index';
 
 class UserController {
   async index(req: Request, res: Response) {
