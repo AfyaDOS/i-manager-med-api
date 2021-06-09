@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { getRepository, QueryFailedError } from 'typeorm';
 import Client from '../../database/entity/Client';
 import Address from '../../database/entity/Address';
+import connection from '../../database';
 
 class ClientsController {
   async set(req: Request, res: Response) {
@@ -14,6 +15,8 @@ class ClientsController {
         address: { city, state, street, district, numberOf, postcode },
         bloodtype,
       } = req.body;
+
+      await connection.create();
 
       const newAddress = new Address();
 
@@ -49,8 +52,11 @@ class ClientsController {
 
       await client.save();
 
+      await connection.close();
+
       return res.status(201).end();
     } catch (error) {
+      await connection.close();
       if (error instanceof QueryFailedError) {
         return res.status(400).json({
           error: true,

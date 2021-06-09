@@ -1,11 +1,12 @@
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
+import cors from 'cors';
 import { routes } from './routes';
-import './database/index';
 import swaggerDocument from '../swagger.json';
 
 const app = express();
 
+app.use(cors({ allowedHeaders: '*' }));
 app.use(express.json());
 
 app.use('/documentation', swaggerUi.serve, swaggerUi.setup(swaggerDocument));

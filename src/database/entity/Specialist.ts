@@ -1,4 +1,3 @@
-import { type } from 'os';
 import {
   Column,
   CreateDateColumn,
@@ -6,7 +5,6 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
   ManyToOne,
-  OneToMany,
   JoinColumn,
   BaseEntity,
   OneToOne,
@@ -44,7 +42,7 @@ class Specialist extends BaseEntity {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @ManyToOne((type) => User, (specialists) => Specialist, {
+  @ManyToOne(() => User, (specialists) => Specialist, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
