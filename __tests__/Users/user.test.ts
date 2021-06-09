@@ -1,8 +1,6 @@
 import request from 'supertest';
-import { getRepository } from 'typeorm';
 import app from '../../src/server';
 import connection from '../../src/database/index';
-import User from '../../src/database/entity/User';
 
 beforeAll(async () => {
   await connection.create();
@@ -16,23 +14,50 @@ afterAll(async () => {
 //   await connection.clear();
 // });
 
-it('creates a user', async () => {
-  const repository = getRepository(User);
-  const user = await repository.find();
-  console.log(user, '---------------------');
-  // expect(user.length).toBe(2);
-  expect(user[0].name).toBe('Marcelo2');
-});
-
-it('index a user', async () => {
+it('index user', async () => {
   const getUsers = await request(app).get('/users');
+  console.log(getUsers.body);
   expect(getUsers.status).toBe(200);
 });
 
-it('create a user', async () => {
+it('create user', async () => {
   const setUsers = await request(app)
     .post('/users')
-    .send({ name: 'teste', email: 'teste', password: '3-3-02' });
+    .send({ name: 'teste', email: 'teste@teste', password: 'teste' });
+  expect(setUsers.status).toBe(200);
 
-  expect(setUsers.status).toBe(409);
+  const emailConflict = await request(app)
+    .post('/users')
+    .send({ name: 'teste', email: 'teste@teste', password: 'teste' });
+  expect(emailConflict.status).toBe(409);
+
+  await request(app).delete(`/users/${setUsers.body.id}`);
+});
+
+it('update user', async () => {
+  const setUsers = await request(app)
+    .post('/users')
+    .send({ name: 'teste', email: '1teste@teste', password: 'teste' });
+  expect(setUsers.status).toBe(200);
+
+  const updateUser = await request(app)
+    .put(`/users/${setUsers.body.id}`)
+    .send({ name: 'Update', email: '1Update@teste', password: 'Update' });
+  expect(updateUser.status).toBe(200);
+
+  const emailConflict = await request(app)
+    .put(`/users/${setUsers.body.id}`)
+    .send({ name: 'Update', email: '1Update@teste', password: 'Update' });
+  expect(emailConflict.status).toBe(409);
+
+  await request(app).delete(`/users/${setUsers.body.id}`);
+});
+
+it('delete user', async () => {
+  const setUsers = await request(app)
+    .post('/users')
+    .send({ name: 'teste', email: '1teste@teste', password: 'teste' });
+
+  const deleteUser = await request(app).delete(`/users/${setUsers.body.id}`);
+  expect(deleteUser.status).toBe(200);
 });

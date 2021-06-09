@@ -6,7 +6,8 @@ import swaggerDocument from '../swagger.json';
 
 const app = express();
 
-app.use(cors({ allowedHeaders: '*' }));
+app.use(cors());
+
 app.use(express.json());
 
 app.use('/documentation', swaggerUi.serve, swaggerUi.setup(swaggerDocument));

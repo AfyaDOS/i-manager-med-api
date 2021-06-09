@@ -8,7 +8,9 @@ class SpecialtiesController {
   async index(req: Request, res: Response) {
     try {
       const repositorySpecialties = getRepository(Specialties);
-      const SpecialtiesExists = await repositorySpecialties.find();
+      const SpecialtiesExists = await repositorySpecialties.find({
+        select: ['id', 'specialty'],
+      });
       return res.status(200).json(SpecialtiesExists);
     } catch (error) {
       return res.status(404).json({ error: true, message: error.message });
