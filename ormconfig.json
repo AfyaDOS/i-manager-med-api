@@ -1,6 +1,6 @@
 [
   {
-    "name": "default",
+    "name": "only",
     "type": "postgres",
     "host": "tuffi.db.elephantsql.com",
     "url": "postgres://xhmkdamg:koESJwiMq-deJ_r73f5KO3AAbFh4mNfr@tuffi.db.elephantsql.com/xhmkdamg",
