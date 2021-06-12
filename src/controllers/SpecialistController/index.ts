@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
+import connection from '../../database';
 import Address from '../../database/entity/Address';
 
 import Specialist from '../../database/entity/Specialist';
@@ -7,10 +8,14 @@ import Specialist from '../../database/entity/Specialist';
 class SpecialistController {
   async index(req: Request, res: Response) {
     try {
+      await connection.create();
       const repositorySpecialist = getRepository(Specialist);
       const specialtist = await repositorySpecialist.find({ relations: ['specialties', 'address_id'] });
+
+      connection.close();
       return res.status(200).json(specialtist);
     } catch (error) {
+      connection.close();
       return res.status(404).json({ error: true, message: error.message });
     }
   }

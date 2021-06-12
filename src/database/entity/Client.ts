@@ -4,13 +4,13 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import Address from './Address';
 import BloodType from './BloodType';
-
 
 @Entity('clients')
 class Client extends BaseEntity {
@@ -26,8 +26,14 @@ class Client extends BaseEntity {
   @Column({ type: 'decimal', nullable: false })
   phone: number;
 
+  @Column({ type: 'decimal', nullable: true })
+  cellphone: number;
+
   @Column({ type: 'text', nullable: false })
   email: string;
+
+  @Column({ type: 'text', nullable: true })
+  gender: string;
 
   @OneToOne(() => Address, {
     onDelete: 'CASCADE',
@@ -36,7 +42,7 @@ class Client extends BaseEntity {
   @JoinColumn()
   address: Address;
 
-  @OneToOne(() => BloodType, {
+  @ManyToOne(() => BloodType, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })

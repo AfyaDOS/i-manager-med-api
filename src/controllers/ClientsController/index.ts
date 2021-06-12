@@ -12,6 +12,8 @@ class ClientsController {
         cpf,
         email,
         phone,
+        gender,
+        cellphone,
         address: { city, state, street, district, numberOf, postcode },
         bloodtype,
       } = req.body;
@@ -27,6 +29,8 @@ class ClientsController {
         district,
         numberOf,
         postcode,
+        gender,
+        cellphone,
       });
 
       Object.entries(newAddress).forEach(([key, value]) => {
@@ -56,6 +60,7 @@ class ClientsController {
 
       return res.status(201).end();
     } catch (error) {
+      console.log(error);
       await connection.close();
       if (error instanceof QueryFailedError) {
         return res.status(400).json({
@@ -70,14 +75,19 @@ class ClientsController {
 
   async getAll(req: Request, res: Response) {
     try {
+      await connection.create();
+
       const clientsRepository = getRepository(Client);
 
       const clients = await clientsRepository.find({ relations: ['address', 'bloodtype'] });
+
+      await connection.close();
 
       if (clients.length === 0) throw new Error('Nenhum cliente cadastrado.');
 
       return res.status(200).json(clients);
     } catch (error) {
+      await connection.close();
       return res.status(400).json({ error: true, message: error.message });
     }
   }
