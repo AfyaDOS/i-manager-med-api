@@ -32,7 +32,6 @@ class LoginController {
       const token = jwt.sign({ id: user.id, name: user.name }, 'dotEnv', { expiresIn: '1d' });
       // @ts-ignore
       delete user.password;
-
       return res.status(200).json({ user, token });
     } catch (error) {
       await connection.close();
