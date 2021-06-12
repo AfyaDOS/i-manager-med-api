@@ -8,9 +8,7 @@ class SpecialistController {
   async index(req: Request, res: Response) {
     try {
       const repositorySpecialist = getRepository(Specialist);
-      const specialtist = await repositorySpecialist.find({
-        relations: ['specialties', 'address_id'],
-      });
+      const specialtist = await repositorySpecialist.find({ relations: ['specialties', 'address_id'] });
       return res.status(200).json(specialtist);
     } catch (error) {
       return res.status(404).json({ error: true, message: error.message });
@@ -21,18 +19,14 @@ class SpecialistController {
     try {
       const repositorySpecialist = getRepository(Specialist);
       const repositoryAddress = getRepository(Address);
-      const { name, email, registry, phone, cell, specialties, address } =
-        req.body;
-
+      const { name, email, registry, phone, cell, specialties, address } = req.body;
 
       const addressCreate = repositoryAddress.create(address);
       await repositoryAddress.save(addressCreate);
       // @ts-ignore
       const address_id = await repositoryAddress.findOne(addressCreate.id);
 
-      const registryExists = await repositorySpecialist.findOne({
-        where: { registry },
-      });
+      const registryExists = await repositorySpecialist.findOne({ where: { registry } });
 
       if (registryExists) {
         return res.status(409).send('Registro já cadastrado');
@@ -66,9 +60,7 @@ class SpecialistController {
       const specialist = await repositorySpecialist.findOne(id);
       if (!specialist) throw new Error('Especialista não encontrado.');
 
-      const registryExists = await repositorySpecialist.findOne({
-        where: { registry: data?.registry },
-      });
+      const registryExists = await repositorySpecialist.findOne({ where: { registry: data?.registry } });
 
       if (registryExists) {
         return res.status(409).send('Registro já cadastrado');
