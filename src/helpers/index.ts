@@ -1,18 +1,19 @@
 export function compareKeys(a: Record<any, any>, b: Record<any, any>) {
   return new Promise((resolve, reject) => {
-    const aKeys = Object.keys(a).sort();
-    const bKeys = Object.keys(b).sort();
-    const missingKeys: string[] = [];
+    let aKeys = Object.keys(a).sort();
+    let bKeys = Object.keys(b).sort();
+    let missingKeys: string[] = [];
+
+    console.log(JSON.stringify(a))
 
     if (aKeys.length !== bKeys.length) {
-      aKeys.forEach((key, index) => {
-        if (!bKeys[index]) {
-          console.log(key);
+      Object.keys(aKeys).forEach((key, index) => {
+        if (!Object.keys(bKeys)[index]) {
           missingKeys.push(key);
         }
       });
       return reject(
-        new Error('Dados não esperados.'),
+        new Error(`Dados ausentes, ${JSON.stringify(missingKeys)}`),
       );
     }
 

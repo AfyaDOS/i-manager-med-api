@@ -13,11 +13,11 @@ const connection = {
 
   async clear() {
     try {
-      const connection2 = getConnection('default');
-      const entities = connection2.entityMetadatas;
+      const connect = getConnection('default');
+      const entities = connect.entityMetadatas;
 
       const promises = entities.map(async (entity) => {
-        const repository = connection2.getRepository(entity.name);
+        const repository = connect.getRepository(entity.name);
         return repository.query(`DELETE FROM ${entity.tableName}`);
       });
 
@@ -27,6 +27,5 @@ const connection = {
     }
   },
 };
-export default connection;
 
-connection.create();
+export default connection;

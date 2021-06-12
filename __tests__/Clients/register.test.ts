@@ -1,44 +1,22 @@
-// import request from 'supertest';
-// import { createConnection, createConnections } from 'typeorm';
-// import { createTypeormConn } from '../../src/database';
-// import app from '../../src/server';
-// import { MockClient } from '../../__mocks__';
+import request from 'supertest';
+// import connection from '../../src/database';
+import app from '../../src/server';
+import { MockClient } from '../../__mocks__';
 
-// jest.useFakeTimers();
+describe('Test Create new Client', () => {
+  // beforeAll(async () => {
+  //   await connection.create();
+  // });
 
-// describe('Post Endpoints', () => {
-//   beforeAll((done) => {
-//     // createConnections().then(() => done()).catch((err) => done(err));
+  // afterAll(async () => {
+  //   await connection.close();
+  // });
 
-//     createTypeormConn
-//       .create()
-//       .then(() => done())
-//       .catch((err) => done(err.message));
-//   });
+  it('should create a new Client', async () => {
+    const res = await request(app)
+      .post('/clients/register')
+      .send(MockClient);
 
-//   afterAll((done) => {
-//     createTypeormConn
-//       .clear()
-//       .then(() => {
-//         createTypeormConn
-//           .close()
-//           .then(() => done())
-//           .catch((err) => done(err.message));
-//       })
-//       .catch((err) => done(err.message));
-//   });
-
-//   it('should create a new Client', (done) => {
-//     request(app)
-//       .post('/clients/register')
-//       .send(MockClient)
-//       .then((res) => {
-//         expect(res.statusCode).toEqual(201);
-//         done();
-//       })
-//       .catch((res) => {
-//         expect(res.statusCode).toEqual(201);
-//         done();
-//       });
-//   });
-// });
+    expect(res.statusCode).toEqual(201);
+  });
+});

@@ -15,11 +15,9 @@ class ServiceController {
         if (!value) throw new Error(`O campo ${key} é obrigatório`);
       });
 
-      await service.save();
-
-      return res.status(201).end();
+      return res.send(200).end();
     } catch (error) {
-      return res.status(400).json({
+      return res.send(400).json({
         error: true,
         message: error.message,
       });
@@ -28,13 +26,13 @@ class ServiceController {
 
   async getAll(req: Request, res: Response) {
     try {
-      const serviceRepository = getRepository(Service);
+      const clientsRepository = getRepository(Service);
 
-      const services = await serviceRepository.find({ relations: ['client', 'specialist'] });
+      const clients = await clientsRepository.find({ relations: ['address', 'bloodtype'] });
 
-      if (services.length === 0) throw new Error('Nenhum service cadastrado.');
+      if (clients.length === 0) throw new Error('Nenhum cliente cadastrado.');
 
-      return res.status(200).json(services);
+      return res.status(200).json(clients);
     } catch (error) {
       return res.status(400).json({ error: true, message: error.message });
     }

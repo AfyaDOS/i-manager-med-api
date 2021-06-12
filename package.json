@@ -10,7 +10,7 @@
     "typeorm": "ts-node-dev  ./node_modules/typeorm/cli.js",
     "sync": "typeorm schema:sync",
     "test": "cross-env NODE_ENV=only jest --runInBand --forceExit --detectOpenHandles  --watchAll --testTimeout=60000",
-    "coverage": "cross-env NODE_ENV=development jest --coverage --forceExit --detectOpenHandles  --watchAll --maxWorkers=1 --testTimeout=60000"
+    "coverage": "cross-env NODE_ENV=test jest --coverage --forceExit --detectOpenHandles  --watchAll --maxWorkers=1 --testTimeout=60000"
   },
   "dependencies": {
     "@types/jsonwebtoken": "^8.5.1",
