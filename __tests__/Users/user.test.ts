@@ -16,7 +16,6 @@ afterAll(async () => {
 
 it('index user', async () => {
   const getUsers = await request(app).get('/users');
-  console.log(getUsers.body);
   expect(getUsers.status).toBe(200);
 });
 

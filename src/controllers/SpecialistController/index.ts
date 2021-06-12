@@ -24,6 +24,7 @@ class SpecialistController {
       const { name, email, registry, phone, cell, specialties, address } =
         req.body;
 
+
       const addressCreate = repositoryAddress.create(address);
       await repositoryAddress.save(addressCreate);
       // @ts-ignore

@@ -9,7 +9,7 @@ class SpecialtiesController {
     try {
       const repositorySpecialties = getRepository(Specialties);
       const SpecialtiesExists = await repositorySpecialties.find({
-        select: ['id', 'specialty'],
+        select: ['id', 'specialty', 'text'],
       });
       return res.status(200).json(SpecialtiesExists);
     } catch (error) {
@@ -28,6 +28,7 @@ class SpecialtiesController {
 
       const specialties = repositorySpecialties.create({
         specialty,
+        text: specialty,
         specialist,
       });
 
@@ -53,6 +54,7 @@ class SpecialtiesController {
 
       // @ts-ignore
       specialties.specialty = specialty;
+      specialties.text = specialty;
 
       // @ts-ignore
       await repositorySpecialties.save(specialties);

@@ -13,7 +13,7 @@ class LoginController {
       const user = await repository.findOne({ where: { email } });
 
       if (!user) {
-        return res.status(401).send('usuário e/ou senha inválidos');
+        return res.sendStatus(401);
       }
       //@ts-ignore
       const passwordIsValid = await bcrypt.compare(password, user.password);
@@ -27,7 +27,6 @@ class LoginController {
       });
       // @ts-ignore
       delete user.password;
-
       return res.status(200).json({ user, token });
     } catch (error) {
       return res.status(404).json({ error: true, message: error.message });

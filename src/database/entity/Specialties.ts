@@ -1,4 +1,3 @@
-import { type } from 'os';
 import {
   Column,
   CreateDateColumn,
@@ -20,13 +19,16 @@ class Specialties extends BaseEntity {
   @Column()
   specialty: string;
 
+  @Column()
+  text: string;
+
   @CreateDateColumn()
   created_at: Date;
 
   @UpdateDateColumn()
   updated_at: Date;
 
-  @ManyToOne((type) => Specialist, (specialist) => specialist.specialties, {
+  @ManyToOne(() => Specialist, (specialist) => specialist.specialties, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })

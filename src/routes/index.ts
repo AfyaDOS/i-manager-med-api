@@ -15,7 +15,7 @@ routes.use('/login', routesLogin);
 routes.use('/users', routesUsers);
 routes.use('/clients', routesClients);
 routes.use('/specialist', routesSpecialist);
-routes.use('/specialties', authMiddleware, routesSpecialties);
+routes.use('/specialties', routesSpecialties);
 routes.use('/bloodtype', routesBloodType);
 routes.use('/services', routesServices);
 routes.use('/medrecord', routesMedRecord);
