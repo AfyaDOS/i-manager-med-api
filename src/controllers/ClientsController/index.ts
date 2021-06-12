@@ -29,8 +29,6 @@ class ClientsController {
         district,
         numberOf,
         postcode,
-        gender,
-        cellphone,
       });
 
       Object.entries(newAddress).forEach(([key, value]) => {
@@ -47,6 +45,8 @@ class ClientsController {
         email,
         phone,
         bloodtype,
+        gender,
+        cellphone,
         address: id,
       });
 
@@ -83,9 +83,30 @@ class ClientsController {
 
       await connection.close();
 
-      if (clients.length === 0) throw new Error('Nenhum cliente cadastrado.');
+      if (clients.length === 0) {
+        return res.status(200).json([]);
+      }
 
       return res.status(200).json(clients);
+    } catch (error) {
+      await connection.close();
+      return res.status(400).json({ error: true, message: error.message });
+    }
+  }
+
+  async remove(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      await connection.create();
+      const clientsRepository = getRepository(Client);
+
+      const client = await clientsRepository.findOne(id);
+
+      await client?.remove();
+
+      await connection.close();
+
+      return res.status(200).end();
     } catch (error) {
       await connection.close();
       return res.status(400).json({ error: true, message: error.message });
