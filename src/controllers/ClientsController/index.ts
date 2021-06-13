@@ -79,7 +79,7 @@ class ClientsController {
 
       const clientsRepository = getRepository(Client);
 
-      const clients = await clientsRepository.find({ relations: ['address', 'bloodtype'] });
+      const clients = await clientsRepository.find({ relations: ['bloodtype', 'address'] });
 
       await connection.close();
 

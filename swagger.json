@@ -8,9 +8,8 @@
             "email": "afyados@gmail.com"
         }
     },
-    "host": "localhost:5000/documentation",
+    "host": "localhost:5000",
     "schemes": [
-        "https",
         "http"
     ],
     "paths": {
@@ -20,6 +19,75 @@
                     "Users"
                 ],
                 "summary": "Retorna os usuários da base",
+                "description": "Você deve estar autenticado para usar esta rota",
+                "operationId": "addPet",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Users"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Usuário não autenticado"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Você deve passar o email e password no body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/CreateUserBody"
+                        }
+                    }
+                ],
+                "summary": "Cadastra um usuário na base",
+                "description": "",
+                "operationId": "add",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/CreateUser"
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Usuário já cadastrado"
+                    }
+                }
+            }
+        },
+        "/clients": {
+            "get": {
+                "tags": [
+                    "Clientes"
+                ],
+                "summary": "Retorna os clientes cadastrados",
                 "description": "Você deve estar autenticado para usar esta rota",
                 "operationId": "addPet",
                 "consumes": [

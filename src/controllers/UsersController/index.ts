@@ -10,9 +10,10 @@ class UserController {
       await connection.create();
       const repository = getRepository(User);
       const userExists = await repository.find();
-      //await typeorm.close();
+      await connection.close();
       return res.status(200).json(userExists);
     } catch (error) {
+      await connection.close();
       return res.status(404).json({ error: true, message: error.message });
     }
   }
@@ -66,7 +67,7 @@ class UserController {
       // @ts-ignore
 
       await repository.save(user);
-      await connection.close(); 
+      await connection.close();
       return res.status(200).json(user);
     } catch (error) {
       await connection.close();
