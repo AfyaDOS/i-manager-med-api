@@ -14,6 +14,7 @@ class SpecialtiesController {
       await connection.close();
       return res.status(200).json(SpecialtiesExists);
     } catch (error) {
+      await connection.close();
       return res.status(404).json({ error: true, message: error.message });
     }
   }
@@ -40,6 +41,7 @@ class SpecialtiesController {
 
       return res.status(200).json(specialties);
     } catch (error) {
+      await connection.close();
       return res.status(404).json({ error: true, message: error.message });
     }
   }
