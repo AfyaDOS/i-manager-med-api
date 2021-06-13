@@ -49,6 +49,7 @@ class ClientsController {
 
       return res.status(200).json(clients);
     } catch (error) {
+      console.log(error);
       await connection.close();
       return res.status(400).json({ error: true, message: error.message });
     }
