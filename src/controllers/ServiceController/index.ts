@@ -20,6 +20,7 @@ class ServiceController {
 
       return res.send(200).end();
     } catch (error) {
+      await connection.close();
       return res.send(400).json({
         error: true,
         message: error.message,

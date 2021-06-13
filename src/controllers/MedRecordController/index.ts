@@ -42,7 +42,8 @@ class MedRecordController {
       const medRecords = await medRecordRepository.find({ where: { client: id }, relations: ['client', 'specialist'] });
 
       if (medRecords.length === 0) {
-        res.status(200).json([]);
+        await connection.close();
+        return res.status(200).json([]);
       }
 
       await connection.close();

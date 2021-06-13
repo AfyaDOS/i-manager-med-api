@@ -20,7 +20,7 @@ class Service extends BaseEntity {
   @Column({ type: 'timestamp', nullable: false })
   scheduleDate: Date;
 
-  @Column({ type: 'timestamp', nullable: false })
+  @Column({ type: 'timestamp', nullable: true })
   serviceDate: Date;
 
   @OneToOne(() => Client, {

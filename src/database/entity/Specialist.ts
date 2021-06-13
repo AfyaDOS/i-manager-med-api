@@ -42,7 +42,7 @@ class Specialist extends BaseEntity {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @ManyToOne(() => User, (specialists) => Specialist, {
+  @ManyToOne(() => User, () => Specialist, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
@@ -58,8 +58,8 @@ class Specialist extends BaseEntity {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
-  @JoinColumn({ name: 'address_id' })
-  address_id: string;
+  @JoinColumn()
+  address: string;
 }
 
 export default Specialist;
