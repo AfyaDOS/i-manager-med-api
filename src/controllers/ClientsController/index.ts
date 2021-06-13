@@ -5,6 +5,55 @@ import Address from '../../database/entity/Address';
 import connection from '../../database';
 
 class ClientsController {
+  async getAll(req: Request, res: Response) {
+    try {
+      await connection.create();
+
+      const clientsRepository = getRepository(Client);
+
+      let clients = await clientsRepository
+        .createQueryBuilder('client')
+        .select([
+          'client.name',
+          'client.cpf',
+          'client.email',
+          'client.id',
+          'client.phone',
+          'client.cellphone',
+          'client.gender',
+        ])
+        .innerJoin('client.address', 'address')
+        .innerJoin('client.bloodtype', 'bloodtype')
+        .addSelect([
+          'address.id',
+          'address.city',
+          'address.state',
+          'address.street',
+          'address.district',
+          'address.numberOf',
+          'address.postcode',
+        ])
+        .addSelect(['bloodtype.id'])
+        .getMany();
+
+      await connection.close();
+
+      if (clients.length === 0) {
+        return res.status(200).json([]);
+      }
+
+      clients = clients.map((client) => ({
+        ...client,
+        bloodtype: client.bloodtype.id,
+      })) as unknown as Client[];
+
+      return res.status(200).json(clients);
+    } catch (error) {
+      await connection.close();
+      return res.status(400).json({ error: true, message: error.message });
+    }
+  }
+
   async set(req: Request, res: Response) {
     try {
       const {
@@ -60,7 +109,6 @@ class ClientsController {
 
       return res.status(201).end();
     } catch (error) {
-      console.log(error);
       await connection.close();
       if (error instanceof QueryFailedError) {
         return res.status(400).json({
@@ -73,23 +121,29 @@ class ClientsController {
     }
   }
 
-  async getAll(req: Request, res: Response) {
+  async update(req: Request, res: Response) {
     try {
+      const { id } = req.params;
+      const data = req.body;
+
       await connection.create();
 
-      const clientsRepository = getRepository(Client);
+      const clientRepository = getRepository(Client);
 
-      const clients = await clientsRepository.find({ relations: ['bloodtype', 'address'] });
+      const client = await clientRepository.findOne(id);
 
-      await connection.close();
-
-      if (clients.length === 0) {
-        return res.status(200).json([]);
+      if (!client) {
+        throw new Error('Cliente não encontrado !!');
       }
 
-      return res.status(200).json(clients);
-    } catch (error) {
+      Object.assign(client, data);
+
+      await clientRepository.save(client);
+
       await connection.close();
+
+      return res.status(201).end();
+    } catch (error) {
       return res.status(400).json({ error: true, message: error.message });
     }
   }
