@@ -1,14 +1,13 @@
 import request from 'supertest';
 import app from '../../src/server';
-import connection from '../../src/database/index';
 
-beforeAll(async () => {
-  await connection.create();
-});
+// beforeAll(async () => {
+//   await connection.create();
+// });
 
-afterAll(async () => {
-  await connection.close();
-});
+// afterAll(async () => {
+//   await connection.close();
+// });
 
 // beforeEach(async () => {
 //   await connection.clear();
