@@ -28,6 +28,7 @@ class UserController {
 
       const emailExists = await repository.findOne({ where: { email } });
       if (emailExists) {
+        await connection.close();
         return res.status(409).send('Email já cadastrado');
       }
 
@@ -52,6 +53,7 @@ class UserController {
       const emailExists = await repository.findOne({ where: { email } });
 
       if (emailExists) {
+        await connection.close();
         return res.status(409).send('Email já cadastrado');
       }
 
@@ -83,6 +85,7 @@ class UserController {
       const userExists = await repository.findOne(id);
 
       if (!userExists) {
+        await connection.close();
         return res.status(404).send('Usuário não encontrado');
       }
       await repository.delete(id);

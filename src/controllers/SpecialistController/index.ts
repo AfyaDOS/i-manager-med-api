@@ -31,6 +31,7 @@ class SpecialistController {
       const registryExists = await repositorySpecialist.findOne({ where: { registry } });
 
       if (registryExists) {
+        await connection.close();
         return res.status(409).send('Registro já cadastrado');
       }
 
@@ -68,6 +69,8 @@ class SpecialistController {
         .findOne({ where: { registry: data?.registry } });
 
       if (registryExists) {
+        await connection.close();
+
         return res.status(409).send('Registro já cadastrado');
       }
 
