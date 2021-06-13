@@ -9,7 +9,7 @@ class SpecialistController {
     try {
       await connection.create();
       const repositorySpecialist = getRepository(Specialist);
-      const specialtist = await repositorySpecialist.find({ relations: ['specialties', 'address_id'] });
+      const specialtist = await repositorySpecialist.find({ relations: ['specialties', 'address'] });
       await connection.close();
       return res.status(200).json(specialtist);
     } catch (error) {
@@ -42,7 +42,7 @@ class SpecialistController {
         phone,
         cell,
         specialties,
-        address_id: address_id?.id,
+        address: address_id?.id,
       });
 
       await repositorySpecialist.save(specialist);
@@ -68,8 +68,8 @@ class SpecialistController {
       Object.assign(specialist, { ...data });
       await repositorySpecialist.save(specialist);
 
-      const address = await repositoryAddress.findOne(data.address_id.id);
-      await Object.assign(address, { ...data.address_id });
+      const address = await repositoryAddress.findOne(data.address.id);
+      await Object.assign(address, { ...data.address });
       // @ts-ignore
       await repositoryAddress.save(address);
       await connection.close();
