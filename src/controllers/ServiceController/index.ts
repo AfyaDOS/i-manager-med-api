@@ -7,21 +7,20 @@ class ServiceController {
   async set(req: Request, res: Response) {
     try {
       await connection.create();
-      const { scheduleDate, serviceDate, client, specialist, serviceState } = req.body;
+      const data = req.body;
 
       const service = new Service();
 
-      Object.assign(service, { scheduleDate, serviceDate, client, specialist, serviceState });
+      Object.assign(service, data);
 
-      Object.entries(service).forEach(([key, value]) => {
-        if (!value) throw new Error(`O campo ${key} é obrigatório`);
-      });
+      await service.save();
+
       await connection.close();
 
-      return res.send(200).end();
+      return res.status(200).end();
     } catch (error) {
       await connection.close();
-      return res.send(400).json({
+      return res.status(400).json({
         error: true,
         message: error.message,
       });
@@ -31,9 +30,30 @@ class ServiceController {
   async getAll(req: Request, res: Response) {
     try {
       await connection.create();
-      const clientsRepository = getRepository(Service);
+      const serviceRepository = getRepository(Service);
 
-      const clients = await clientsRepository.find({ relations: ['address', 'bloodtype'] });
+      const clients = await serviceRepository
+        .createQueryBuilder('service')
+        .select([
+          'service.scheduleDate',
+          'service.serviceDate',
+        ])
+        .innerJoin('service.client', 'client')
+        .addSelect([
+          'client.id',
+          'client.name',
+          'client.cpf',
+          'client.cellphone',
+          'client.phone',
+        ])
+        .innerJoin('service.specialist', 'specialist')
+        .addSelect([
+          'specialist.id',
+          'specialist.name',
+        ])
+        .innerJoin('specialist.specialties', 'specialties')
+        .addSelect(['specialties.text'])
+        .getMany();
 
       if (clients.length === 0) {
         return res.status(200).json([]);

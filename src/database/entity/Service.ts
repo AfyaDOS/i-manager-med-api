@@ -34,6 +34,11 @@ class Service extends BaseEntity {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
+
+  @OneToOne(() => Specialist, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn()
   specialist: Specialist;
 
