@@ -65,7 +65,8 @@ class SpecialistController {
       const specialist = await repositorySpecialist.findOne(id);
       if (!specialist) throw new Error('Especialista não encontrado.');
 
-      const registryExists = await repositorySpecialist.findOne({ where: { registry: data?.registry } });
+      const registryExists = await repositorySpecialist
+        .findOne({ where: { registry: data?.registry } });
 
       if (registryExists) {
         await connection.close();

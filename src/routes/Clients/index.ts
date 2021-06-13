@@ -5,8 +5,8 @@ const routesClients = Router();
 
 const clientsControlle = new ClientsController();
 
+routesClients.get('/', clientsControlle.getAll);
 routesClients.post('/register', clientsControlle.set);
-routesClients.get('/all', clientsControlle.getAll);
 routesClients.delete('/:id', clientsControlle.remove);
 
 export { routesClients };

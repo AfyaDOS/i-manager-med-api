@@ -13,7 +13,7 @@ const connection = {
 
   async close() {
     try {
-      const connect = getConnection();
+      const connect = getConnection('default');
 
       if (connect.isConnected) await connect.close();
     } catch (error) {
