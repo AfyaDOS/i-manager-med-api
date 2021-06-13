@@ -10,9 +10,10 @@ class UserController {
       await connection.create();
       const repository = getRepository(User);
       const userExists = await repository.find();
-      //await typeorm.close();
+      await connection.close();
       return res.status(200).json(userExists);
     } catch (error) {
+      await connection.close();
       return res.status(404).json({ error: true, message: error.message });
     }
   }
@@ -27,6 +28,7 @@ class UserController {
 
       const emailExists = await repository.findOne({ where: { email } });
       if (emailExists) {
+        await connection.close();
         return res.status(409).send('Email já cadastrado');
       }
 
@@ -51,6 +53,7 @@ class UserController {
       const emailExists = await repository.findOne({ where: { email } });
 
       if (emailExists) {
+        await connection.close();
         return res.status(409).send('Email já cadastrado');
       }
 
@@ -66,7 +69,7 @@ class UserController {
       // @ts-ignore
 
       await repository.save(user);
-      await connection.close(); 
+      await connection.close();
       return res.status(200).json(user);
     } catch (error) {
       await connection.close();
@@ -82,6 +85,7 @@ class UserController {
       const userExists = await repository.findOne(id);
 
       if (!userExists) {
+        await connection.close();
         return res.status(404).send('Usuário não encontrado');
       }
       await repository.delete(id);
