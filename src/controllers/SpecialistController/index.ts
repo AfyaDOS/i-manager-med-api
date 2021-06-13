@@ -65,15 +65,6 @@ class SpecialistController {
       const specialist = await repositorySpecialist.findOne(id);
       if (!specialist) throw new Error('Especialista não encontrado.');
 
-      const registryExists = await repositorySpecialist
-        .findOne({ where: { registry: data?.registry } });
-
-      if (registryExists) {
-        await connection.close();
-
-        return res.status(409).send('Registro já cadastrado');
-      }
-
       Object.assign(specialist, { ...data });
       await repositorySpecialist.save(specialist);
 
@@ -97,6 +88,8 @@ class SpecialistController {
       const specialistExists = await repositorySpecialist.findOne(id);
 
       if (!specialistExists) {
+        await connection.close();
+
         return res.status(404).send('Especialista não encontrado');
       }
 

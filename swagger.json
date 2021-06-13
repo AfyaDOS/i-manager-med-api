@@ -68,6 +68,64 @@
         }
       }
     },
+    "users/{id}": {
+      "put": {
+        "tags": ["Users"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "id",
+            "description": "Usuário a ser atualizado"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Os dados para serem atualizados devem ser passados no body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateUser"
+            }
+          }
+        ],
+        "summary": "Atualiza o usuário",
+        "description": "",
+        "operationId": "updateClients",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Algo deu errado ao tentar cadastrar p usuário"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Users"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "id",
+            "description": "usuário a ser deletado",
+            "required": true
+          }
+        ],
+        "summary": "Deleta um usuário",
+        "description": "",
+        "operationId": "deleteClients",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Algo deu errado ao tentar deletar especialista"
+          }
+        }
+      }
+    },
     "/clients": {
       "get": {
         "tags": ["Clientes"],
@@ -177,6 +235,116 @@
         }
       }
     },
+     "/specialist": {
+      "get": {
+        "tags": ["Especialistas"],
+        "summary": "Retorna os especialistas e suas especialidades cadastradas",
+        "description": "Você deve estar autenticado para usar esta rota",
+        "operationId": "getClients",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Sucesso na operação",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Specialist"
+              }
+            }
+          },
+          "401": {
+            "description": "Usuário não autenticado"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Especialistas"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Os dados cadastrais devem ser passados no body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SpecialistBody"
+            }
+          }
+        ],
+        "summary": "Cadastra o especialista na base",
+        "description": "",
+        "operationId": "addClients",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Algo deu errado ao tentar cadastrar paciente"
+          }
+        }
+      }
+    },
+    "specialist/{id}": {
+      "put": {
+        "tags": ["Especialistas"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "id",
+            "description": "especialista a ser atualizado"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Os dados para serem atualizados devem ser passados no body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SpecialistBody"
+            }
+          }
+        ],
+        "summary": "Atualiza o especialista",
+        "description": "",
+        "operationId": "updateClients",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Algo deu errado ao tentar cadastrar p Especialista"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Especialistas"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "id",
+            "description": "Especialista a ser deletado",
+            "required": true
+          }
+        ],
+        "summary": "Deleta um especialista",
+        "description": "",
+        "operationId": "deleteClients",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Algo deu errado ao tentar deletar especialista"
+          }
+        }
+      }
+    },
+    
     "/login": {
       "post": {
         "tags": ["Login"],
@@ -416,10 +584,6 @@
       "type": "object",
       "required": ["email", "password"],
       "properties": {
-        "id": {
-          "type": "integr",
-          "format": "uuid"
-        },
         "name": {
           "type": "string"
         },
@@ -450,6 +614,134 @@
       },
       "xml": {
         "name": "Usuario"
+      }
+    },
+    "Specialist": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "registry": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "cell": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "specialties": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "specialty": {
+              "type": "string"
+            }
+          }
+        },
+        "address": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "city": {
+              "type": "string"
+            },
+            "state": {
+              "type": "string"
+            },
+            "street": {
+              "type": "string"
+            },
+            "district": {
+              "type": "string"
+            },
+            "numberOf": {
+              "type": "string"
+            },
+            "postcode": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "xml": {
+        "name": "Specialist"
+      }
+    },
+    "SpecialistBody": {
+      "type": "object",
+      "properties": {
+        "registry": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "cell": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "specialties": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "specialty": {
+              "type": "string"
+            }
+          }
+        },
+        "address": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "city": {
+              "type": "string"
+            },
+            "state": {
+              "type": "string"
+            },
+            "street": {
+              "type": "string"
+            },
+            "district": {
+              "type": "string"
+            },
+            "numberOf": {
+              "type": "string"
+            },
+            "postcode": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "xml": {
+        "name": "SpecialistBody"
       }
     }
   },
