@@ -3,7 +3,9 @@ import { createConnection, getConnection, getConnectionOptions } from 'typeorm';
 const connection = {
   async create() {
     try {
-      const connectionOptions = await getConnectionOptions(process.env.NODE_ENV);
+      const connectionOptions = await getConnectionOptions(
+        process.env.NODE_ENV,
+      );
 
       return createConnection({ ...connectionOptions, name: 'default' });
     } catch (error) {
