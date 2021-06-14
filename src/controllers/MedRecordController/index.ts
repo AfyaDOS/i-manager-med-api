@@ -1,13 +1,10 @@
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
-import connection from '../../database';
 import MedRecord from '../../database/entity/MedRecord';
 
 class MedRecordController {
   async set(req: Request, res: Response) {
     try {
-      await connection.create();
-
       const { client, specialist, description } = req.body;
 
       const medRecord = new MedRecord();
@@ -19,11 +16,9 @@ class MedRecordController {
       });
 
       await medRecord.save();
-      await connection.close();
 
       return res.status(201).end();
     } catch (error) {
-      await connection.close();
       return res.status(400).json({
         error: true,
         message: error.message,
@@ -33,8 +28,6 @@ class MedRecordController {
 
   async getByClient(req: Request, res: Response) {
     try {
-      await connection.create();
-
       const medRecordRepository = getRepository(MedRecord);
 
       const { id } = req.params;
@@ -42,23 +35,17 @@ class MedRecordController {
       const medRecords = await medRecordRepository.find({ where: { client: id }, relations: ['client', 'specialist'] });
 
       if (medRecords.length === 0) {
-        await connection.close();
         return res.status(200).json([]);
       }
 
-      await connection.close();
-
       return res.status(200).json(medRecords);
     } catch (error) {
-      await connection.close();
       return res.status(400).json({ error: true, message: error.message });
     }
   }
 
   async update(req: Request, res: Response) {
     try {
-      await connection.create();
-
       const data = req.body;
 
       const { id } = req.params;
@@ -75,19 +62,14 @@ class MedRecordController {
 
       await medRecordRepository.save(medRecordByClient);
 
-      await connection.close();
-
       return res.status(200).end();
     } catch (error) {
-      await connection.close();
       return res.status(400).json({ error: true, message: error.message });
     }
   }
 
   async delete(req: Request, res: Response) {
     try {
-      await connection.create();
-
       const medRecordRepository = getRepository(MedRecord);
       const { id } = req.params;
       const medRecordExists = await medRecordRepository.findOne(id, { relations: ['client', 'specialist'] });
@@ -97,11 +79,8 @@ class MedRecordController {
       }
       await medRecordRepository.delete(id);
 
-      await connection.close();
-
       return res.status(200).send('Prontuário deletado com sucesso');
     } catch (error) {
-      await connection.close();
       return res.status(404).json({ error: true, message: error.message });
     }
   }

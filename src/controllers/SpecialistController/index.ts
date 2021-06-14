@@ -1,26 +1,22 @@
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
-import connection from '../../database';
 import Address from '../../database/entity/Address';
 import Specialist from '../../database/entity/Specialist';
 
 class SpecialistController {
   async index(req: Request, res: Response) {
     try {
-      await connection.create();
       const repositorySpecialist = getRepository(Specialist);
       const specialtist = await repositorySpecialist.find({ relations: ['specialties', 'address'] });
-      await connection.close();
+
       return res.status(200).json(specialtist);
     } catch (error) {
-      await connection.close();
       return res.status(404).json({ error: true, message: error.message });
     }
   }
 
   async createSpecialist(req: Request, res: Response) {
     try {
-      await connection.create();
       const repositorySpecialist = getRepository(Specialist);
       const repositoryAddress = getRepository(Address);
       const { name, email, registry, phone, cell, specialties, address } = req.body;
@@ -31,7 +27,6 @@ class SpecialistController {
       const registryExists = await repositorySpecialist.findOne({ where: { registry } });
 
       if (registryExists) {
-        await connection.close();
         return res.status(409).send('Registro já cadastrado');
       }
 
@@ -46,17 +41,15 @@ class SpecialistController {
       });
 
       await repositorySpecialist.save(specialist);
-      await connection.close();
+
       return res.status(200).json(specialist);
     } catch (error) {
-      await connection.close();
       return res.status(404).json({ error: true, message: error.message });
     }
   }
 
   async updateSpecialist(req: Request, res: Response) {
     try {
-      await connection.create();
       const repositorySpecialist = getRepository(Specialist);
       const repositoryAddress = getRepository(Address);
       const data = req.body;
@@ -72,32 +65,27 @@ class SpecialistController {
       await Object.assign(address, { ...data.address });
       // @ts-ignore
       await repositoryAddress.save(address);
-      await connection.close();
+
       return res.status(200).json(specialist);
     } catch (error) {
-      await connection.close();
       return res.status(404).json({ error: true, message: error.message });
     }
   }
 
   async deleteSpecialist(req: Request, res: Response) {
     try {
-      await connection.create();
       const repositorySpecialist = getRepository(Specialist);
       const { id } = req.params;
       const specialistExists = await repositorySpecialist.findOne(id);
 
       if (!specialistExists) {
-        await connection.close();
-
         return res.status(404).send('Especialista não encontrado');
       }
 
       await repositorySpecialist.delete(id);
-      await connection.close();
+
       return res.status(200).send('Especialista deletado com sucesso');
     } catch (error) {
-      await connection.close();
       return res.status(404).json({ error: true, message: error.message });
     }
   }

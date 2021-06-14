@@ -2,13 +2,10 @@ import { Request, Response } from 'express';
 import { getRepository, QueryFailedError } from 'typeorm';
 import Client from '../../database/entity/Client';
 import Address from '../../database/entity/Address';
-import connection from '../../database';
 
 class ClientsController {
   async getAll(req: Request, res: Response) {
     try {
-      await connection.create();
-
       const clientsRepository = getRepository(Client);
 
       let clients = await clientsRepository
@@ -36,8 +33,6 @@ class ClientsController {
         .addSelect(['bloodtype.id'])
         .getMany();
 
-      await connection.close();
-
       if (clients.length === 0) {
         return res.status(200).json([]);
       }
@@ -50,7 +45,7 @@ class ClientsController {
       return res.status(200).json(clients);
     } catch (error) {
       console.log(error);
-      await connection.close();
+
       return res.status(400).json({ error: true, message: error.message });
     }
   }
@@ -67,8 +62,6 @@ class ClientsController {
         address: { city, state, street, district, numberOf, postcode },
         bloodtype,
       } = req.body;
-
-      await connection.create();
 
       const newAddress = new Address();
 
@@ -106,11 +99,8 @@ class ClientsController {
 
       await client.save();
 
-      await connection.close();
-
       return res.status(201).end();
     } catch (error) {
-      await connection.close();
       if (error instanceof QueryFailedError) {
         return res.status(400).json({
           error: true,
@@ -127,8 +117,6 @@ class ClientsController {
       const { id } = req.params;
       const data = req.body;
 
-      await connection.create();
-
       const clientRepository = getRepository(Client);
 
       const client = await clientRepository.findOne(id);
@@ -141,8 +129,6 @@ class ClientsController {
 
       await clientRepository.save(client);
 
-      await connection.close();
-
       return res.status(201).end();
     } catch (error) {
       return res.status(400).json({ error: true, message: error.message });
@@ -152,18 +138,15 @@ class ClientsController {
   async remove(req: Request, res: Response) {
     try {
       const { id } = req.params;
-      await connection.create();
+
       const clientsRepository = getRepository(Client);
 
       const client = await clientsRepository.findOne(id);
 
       await client?.remove();
 
-      await connection.close();
-
       return res.status(200).end();
     } catch (error) {
-      await connection.close();
       return res.status(400).json({ error: true, message: error.message });
     }
   }

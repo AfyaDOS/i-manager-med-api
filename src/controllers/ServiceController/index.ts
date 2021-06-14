@@ -1,12 +1,10 @@
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
-import connection from '../../database';
 import Service from '../../database/entity/Service';
 
 class ServiceController {
   async set(req: Request, res: Response) {
     try {
-      await connection.create();
       const data = req.body;
 
       const service = new Service();
@@ -15,11 +13,8 @@ class ServiceController {
 
       await service.save();
 
-      await connection.close();
-
       return res.status(200).end();
     } catch (error) {
-      await connection.close();
       return res.status(400).json({
         error: true,
         message: error.message,
@@ -29,7 +24,6 @@ class ServiceController {
 
   async getAll(req: Request, res: Response) {
     try {
-      await connection.create();
       const serviceRepository = getRepository(Service);
 
       const { date } = req.query;
@@ -63,11 +57,10 @@ class ServiceController {
         return res.status(200).json([]);
       }
 
-      await connection.close();
       return res.status(200).json(clients);
     } catch (error) {
       console.log(error);
-      await connection.close();
+
       return res.status(400).json({ error: true, message: error.message });
     }
   }
