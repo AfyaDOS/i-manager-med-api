@@ -4,7 +4,7 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
-  OneToOne,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -23,26 +23,21 @@ class Service extends BaseEntity {
   @Column({ type: 'timestamp', nullable: true })
   serviceDate: Date;
 
-  @OneToOne(() => Client, {
+  @ManyToOne(() => Client, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
   @JoinColumn()
   client: Client;
 
-  @OneToOne(() => Specialist, {
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
-  })
-
-  @OneToOne(() => Specialist, {
+  @ManyToOne(() => Specialist, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
   @JoinColumn()
   specialist: Specialist;
 
-  @OneToOne(() => ServiceState, {
+  @ManyToOne(() => ServiceState, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })

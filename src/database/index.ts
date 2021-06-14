@@ -1,4 +1,6 @@
-import { createConnection, getConnection, getConnectionOptions } from 'typeorm';
+import { Connection, createConnection, getConnection, getConnectionOptions } from 'typeorm';
+
+let defaultConnection: Connection;
 
 const connection = {
   async create() {
@@ -7,7 +9,11 @@ const connection = {
         process.env.NODE_ENV,
       );
 
-      return createConnection({ ...connectionOptions, name: 'default' });
+      if (!defaultConnection?.isConnected) {
+        defaultConnection = await createConnection({ ...connectionOptions, name: 'default' });
+      }
+
+      return defaultConnection;
     } catch (error) {
       throw new Error(error.message);
     }
@@ -15,9 +21,7 @@ const connection = {
 
   async close() {
     try {
-      const connect = getConnection('default');
-
-      if (connect.isConnected) await connect.close();
+      if (defaultConnection?.isConnected) await defaultConnection.close();
     } catch (error) {
       throw new Error(error.message);
     }

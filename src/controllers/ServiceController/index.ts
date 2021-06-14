@@ -32,9 +32,12 @@ class ServiceController {
       await connection.create();
       const serviceRepository = getRepository(Service);
 
+      const { date } = req.query;
+
       const clients = await serviceRepository
         .createQueryBuilder('service')
         .select([
+          'service.id',
           'service.scheduleDate',
           'service.serviceDate',
         ])
@@ -53,6 +56,7 @@ class ServiceController {
         ])
         .innerJoin('specialist.specialties', 'specialties')
         .addSelect(['specialties.text'])
+        .where(`to_char(service.scheduleDate, 'dd/mm/yyyy') like '%${date}%'`)
         .getMany();
 
       if (clients.length === 0) {
@@ -62,6 +66,8 @@ class ServiceController {
       await connection.close();
       return res.status(200).json(clients);
     } catch (error) {
+      console.log(error);
+      await connection.close();
       return res.status(400).json({ error: true, message: error.message });
     }
   }
