@@ -11,7 +11,7 @@
 
 - https://imanagermed.herokuapp.com/documentation/
 
-# Comandos Para rodar local
+# Comandos para rodar localmente
 
 - Clonar - git clone https://github.com/AfyaDOS/i-manager-med-api.git
 - Instalar as dependências - Yarn
