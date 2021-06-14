@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "set NODE_ENV=production&& cd dir&& node src/index.js",
-    "sync": "typeorm sync -c production"
+    "sync": "typeorm schema:sync -c production"
   },
   "dependencies": {
     "@types/jsonwebtoken": "^8.5.1",
