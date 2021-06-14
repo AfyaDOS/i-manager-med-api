@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "set NODE_ENV=only&& cd dir&& node src/index.js",
-    "copy": "copy ormconfig.production.json dist\\ormconfig.json&& copy package.production.json dist\\package.json",
+    "copy": "cp ormconfig.production.json dist\\ormconfig.json&& cp package.production.json dist\\package.json",
     "build": "tsc --build && yarn copy",
     "dev": "set NODE_ENV=only&& ts-node-dev --respawn --transpile-only --no-notify --files src/index.ts",
     "type": "npx ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
