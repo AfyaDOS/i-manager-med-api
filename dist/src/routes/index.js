@@ -1,0 +1,28 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.routes = void 0;
+const express_1 = require("express");
+const Login_1 = require("./Login");
+const Clients_1 = require("./Clients");
+const Specialist_1 = require("./Specialist");
+const Users_1 = require("./Users");
+const Specialties_1 = require("./Specialties");
+const authMiddleware_1 = __importDefault(require("../middlewares/authMiddleware"));
+const BloodType_1 = require("./BloodType");
+const Services_1 = require("./Services");
+const MedRecord_1 = require("./MedRecord");
+const StateService_1 = require("./StateService");
+const routes = express_1.Router();
+exports.routes = routes;
+routes.use('/login', Login_1.routesLogin);
+routes.use('/users', authMiddleware_1.default, Users_1.routesUsers);
+routes.use('/clients', authMiddleware_1.default, Clients_1.routesClients);
+routes.use('/specialist', authMiddleware_1.default, Specialist_1.routesSpecialist);
+routes.use('/specialties', authMiddleware_1.default, Specialties_1.routesSpecialties);
+routes.use('/bloodtype', authMiddleware_1.default, BloodType_1.routesBloodType);
+routes.use('/services', authMiddleware_1.default, Services_1.routesServices);
+routes.use('/medrecord', authMiddleware_1.default, MedRecord_1.routesMedRecord);
+routes.use('/servicestate', authMiddleware_1.default, StateService_1.routesStateService);
