@@ -17,6 +17,7 @@
     "build"
   ],
   "include": [
-    "src/**/*"
-, "tests"  ]
+    "src/**/*",
+    "tests"
+  ]
 }

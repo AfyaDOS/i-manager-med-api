@@ -45,3 +45,5 @@ const connection = {
 };
 
 connection.create().then(() => console.log('Database is connected'));
+
+export default connection;

@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "start": "set NODE_ENV=only&& cd dir&& node src/index.js",
     "build2": "webpack-cli app.tsx --config webpack-config.js",
     "build": "tsc --build",
     "dev": "set NODE_ENV=only&& ts-node-dev --respawn --transpile-only --no-notify --files src/index.ts",
