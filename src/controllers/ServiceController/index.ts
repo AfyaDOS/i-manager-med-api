@@ -42,6 +42,7 @@ class ServiceController {
           'service.id',
           'service.scheduleDate',
           'service.serviceDate',
+          'service.price',
         ])
         .innerJoin('service.serviceState', 'servicestate')
         .addSelect(['servicestate.id', 'servicestate.state'])

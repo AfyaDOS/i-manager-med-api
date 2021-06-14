@@ -30,6 +30,9 @@ class Service extends BaseEntity {
   @JoinColumn()
   client: Client;
 
+  @Column({ type: 'decimal', nullable: true })
+  price: number;
+
   @ManyToOne(() => Specialist, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',

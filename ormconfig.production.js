@@ -5,6 +5,7 @@ module.exports = {
   username: process.env.DATABASE_USER,
   password: process.env.DATABASE_PASSWORD,
   database: process.env.DATABASE_DB,
+  keepConnectionAlive: true,
   logging: false,
   synchronize: false,
   entities: ['src/database/entity/*.js'],
