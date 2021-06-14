@@ -20,7 +20,6 @@ class ServiceController {
 
       return res.status(200).end();
     } catch (error) {
-      console.log(error);
       await typeOrmConnection.close();
       return res.status(400).json({
         error: true,
@@ -44,6 +43,8 @@ class ServiceController {
           'service.scheduleDate',
           'service.serviceDate',
         ])
+        .innerJoin('service.serviceState', 'servicestate')
+        .addSelect(['servicestate.id', 'servicestate.state'])
         .innerJoin('service.client', 'client')
         .addSelect([
           'client.id',
@@ -73,6 +74,35 @@ class ServiceController {
     } catch (error) {
       await typeOrmConnection.close();
 
+      return res.status(400).json({ error: true, message: error.message });
+    }
+  }
+
+  async update(req: Request, res: Response) {
+    try {
+      await typeOrmConnection.create();
+
+      const data = req.body;
+      const { id } = req.params;
+
+      const serviceRespository = getRepository(Service);
+
+      const service = await serviceRespository.findOne(id);
+
+      if (!service) {
+        await typeOrmConnection.close();
+
+        return res.status(400).json({ error: true, message: 'Atendimento não encotrado' });
+      }
+
+      Object.assign(service, data);
+
+      await serviceRespository.save(service);
+
+      await typeOrmConnection.close();
+
+      return res.status(200).end();
+    } catch (error) {
       return res.status(400).json({ error: true, message: error.message });
     }
   }

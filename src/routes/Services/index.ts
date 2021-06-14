@@ -7,5 +7,6 @@ const bloodTypeControlle = new ServiceController();
 
 routesServices.get('/', bloodTypeControlle.getAll);
 routesServices.post('/', bloodTypeControlle.set);
+routesServices.put('/:id', bloodTypeControlle.update);
 
 export { routesServices };

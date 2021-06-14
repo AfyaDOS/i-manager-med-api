@@ -7,8 +7,11 @@ import typeOrmConnection from '../../database';
 class ClientsController {
   async getAll(req: Request, res: Response) {
     try {
-      await typeOrmConnection.create();
-      const clientsRepository = getRepository(Client);
+      const connection = await typeOrmConnection.create();
+
+      if (!connection) return res.status(400).end();
+
+      const clientsRepository = connection?.getRepository(Client);
 
       let clients = await clientsRepository
         .createQueryBuilder('client')
@@ -48,6 +51,7 @@ class ClientsController {
       await typeOrmConnection.close();
       return res.status(200).json(clients);
     } catch (error) {
+      console.log(error);
       await typeOrmConnection.close();
 
       return res.status(400).json({ error: true, message: error.message });

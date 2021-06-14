@@ -8,6 +8,7 @@
     "username": "xhmkdamg",
     "password": "koESJwiMq-deJ_r73f5KO3AAbFh4mNfr",
     "database": "xhmkdamg",
+    "keepConnectionAlive": true,
     "logging": false,
     "synchronize": false,
     "entities": ["src/database/entity/*.ts"]
