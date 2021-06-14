@@ -1,21 +1,30 @@
-Desenvolvimento de uma aplicação para o projeto Afya </labs>.
+# Back-End I-Manager-Med
 
-/*
+## Grupo Afyados - Afya Labs
 
-Nosso aplicativo deverá disponibilizar as funcionalidades inclusão, alteração, processamento do negócio e consulta importantes.
+## Links
 
-Os dados devem ser armazenados em um banco de dados utilizando frameworks ORM \ SQL.
+- GitHub - https://github.com/AfyaDOS/i-manager-med-api
+- Heroku - https://imanagermed.herokuapp.com/(*rotas-documentação*)
 
-Aplicar as boas práticas de desenvolvimento, organização do projeto, testes unitários e código fonte no github.
+## Documentação Swagger
 
-Código fonte no github com o arquivo README detalhando as funcionalidades, classe principal (main), nome do grupo e membros envolvidos e sua participação no projeto.
+- https://imanagermed.herokuapp.com/documentation/
 
-Refatorar todo o sistema para a estrutura WEB com a finalidade de prover API Rest da aplicação
+## Comandos para rodar localmente
 
-Implementar funcionalidades de segurança usando Basic Auth, OAuth ou JWT (Preferencialmente)
+- Clonar - git clone https://github.com/AfyaDOS/i-manager-med-api.git
+- Instalar as dependências - Yarn
+- Para Rodar(porta 5000) - Yarn Dev
+- Testes Jest - Yarn Test
 
-Criar uma camada de controller\resource para disponibilizar todos os serviços aplicando autenticação\autorização nos serviços para prover os recursos de forma segura.
+## Tecnologias Utilizadas
 
-Disponibilizar uma API Rest que exige autenticação e devidamente documentada pelo Swagger em um ambiente Azure, Heroku ou OnPromisse.
-
-*/
+- Typescript
+- Express
+- Typeorm
+- Jwt token
+- Bcrypt
+- PostgreSql
+- Swagger
+- Jest

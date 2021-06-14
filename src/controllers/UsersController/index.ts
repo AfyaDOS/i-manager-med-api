@@ -55,13 +55,6 @@ class UserController {
       const { id } = req.params;
       const { email, password, name } = req.body;
 
-      const emailExists = await repository.findOne({ where: { email } });
-
-      if (emailExists && emailExists.password !== password) {
-        await typeOrmConnection.close();
-        return res.status(409).send('Email já cadastrado');
-      }
-
       const user = await repository.findOne(id);
       const passwordCrypt = bcrypt.hashSync(password, 8);
 
