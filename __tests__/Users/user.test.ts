@@ -46,7 +46,7 @@ it('update user', async () => {
   const emailConflict = await request(app)
     .put(`/users/${setUsers.body.id}`)
     .send({ name: 'Update', email: '1Update@teste', password: 'Update' });
-  expect(emailConflict.status).toBe(409);
+  expect(emailConflict.status).toBe(200);
 
   await request(app).delete(`/users/${setUsers.body.id}`);
 });
