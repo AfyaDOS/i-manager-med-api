@@ -52,7 +52,7 @@ class UserController {
 
       const emailExists = await repository.findOne({ where: { email } });
 
-      if (emailExists) {
+      if (emailExists && emailExists.password !== password) {
         await connection.close();
         return res.status(409).send('Email já cadastrado');
       }
