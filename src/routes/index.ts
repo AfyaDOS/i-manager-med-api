@@ -13,13 +13,13 @@ import { routesStateService } from './StateService';
 const routes = Router();
 
 routes.use('/login', routesLogin);
-routes.use('/users', routesUsers);
-routes.use('/clients', routesClients);
-routes.use('/specialist', routesSpecialist);
-routes.use('/specialties', routesSpecialties);
-routes.use('/bloodtype', routesBloodType);
-routes.use('/services', routesServices);
-routes.use('/medrecord', routesMedRecord);
-routes.use('/servicestate', routesStateService);
+routes.use('/users', authMiddleware, routesUsers);
+routes.use('/clients', authMiddleware, routesClients);
+routes.use('/specialist', authMiddleware, routesSpecialist);
+routes.use('/specialties', authMiddleware, routesSpecialties);
+routes.use('/bloodtype', authMiddleware, routesBloodType);
+routes.use('/services', authMiddleware, routesServices);
+routes.use('/medrecord', authMiddleware, routesMedRecord);
+routes.use('/servicestate', authMiddleware, routesStateService);
 
 export { routes };
