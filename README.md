@@ -25,6 +25,6 @@
 - Typeorm
 - Jwt token
 - Bcrypt
-- PostgreeSql
+- PostgreSql
 - Swagger
 - Jest
