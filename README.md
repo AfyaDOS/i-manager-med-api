@@ -5,7 +5,7 @@
 # Links
 
 - GitHub - https://github.com/AfyaDOS/i-manager-med-api
-- Heroku - https://imanagermed.herokuapp.com/(**rotas-documentação**)
+- Heroku - https://imanagermed.herokuapp.com/(*rotas-documentação*)
 
 # Documentação Swagger
 
@@ -20,14 +20,14 @@
 
 # Tecnologias Utilizadas
 
-Typescript
-Express
-Typeorm
-Jwt token
-Bcrypt
-PostgreeSql
-Swagger
-Jest
+- Typescript
+- Express
+- Typeorm
+- Jwt token
+- Bcrypt
+- PostgreeSql
+- Swagger
+- Jest
 
 Desenvolvimento de uma aplicação para o projeto Afya </labs>.
 
