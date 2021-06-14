@@ -1,0 +1,13 @@
+{
+  "name": "production",
+  "type": "postgres",
+  "host": "tuffi.db.elephantsql.com",
+  "url": "postgres://xhmkdamg:koESJwiMq-deJ_r73f5KO3AAbFh4mNfr@tuffi.db.elephantsql.com/xhmkdamg",
+  "port": 5432,
+  "username": "xhmkdamg",
+  "password": "koESJwiMq-deJ_r73f5KO3AAbFh4mNfr",
+  "database": "xhmkdamg",
+  "logging": false,
+  "synchronize": false,
+  "entities": ["src/database/entity/*.js"]
+}
