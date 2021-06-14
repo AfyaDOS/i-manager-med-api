@@ -4,12 +4,12 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 import User from '../../database/entity/User';
-import connection from '../../database';
+import typeOrmConnection from '../../database';
 
 class LoginController {
   async login(req: Request, res: Response) {
     try {
-      await connection.create();
+      await typeOrmConnection.create();
 
       const repository = getRepository(User);
 
@@ -17,7 +17,7 @@ class LoginController {
 
       const user = await repository.findOne({ where: { email } });
 
-      await connection.close();
+      await typeOrmConnection.close();
 
       if (!user) {
         return res.status(401).json({ error: true, message: 'Usuario não encontrado !!' });
@@ -34,7 +34,7 @@ class LoginController {
       delete user.password;
       return res.status(200).json({ user, token });
     } catch (error) {
-      await connection.close();
+      await typeOrmConnection.close();
       return res.status(404).json({ error: true, message: error.message });
     }
   }

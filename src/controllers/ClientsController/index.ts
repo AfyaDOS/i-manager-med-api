@@ -2,10 +2,12 @@ import { Request, Response } from 'express';
 import { getRepository, QueryFailedError } from 'typeorm';
 import Client from '../../database/entity/Client';
 import Address from '../../database/entity/Address';
+import typeOrmConnection from '../../database';
 
 class ClientsController {
   async getAll(req: Request, res: Response) {
     try {
+      await typeOrmConnection.create();
       const clientsRepository = getRepository(Client);
 
       let clients = await clientsRepository
@@ -34,6 +36,7 @@ class ClientsController {
         .getMany();
 
       if (clients.length === 0) {
+        await typeOrmConnection.close();
         return res.status(200).json([]);
       }
 
@@ -42,9 +45,10 @@ class ClientsController {
         bloodtype: client.bloodtype.id,
       })) as unknown as Client[];
 
+      await typeOrmConnection.close();
       return res.status(200).json(clients);
     } catch (error) {
-      console.log(error);
+      await typeOrmConnection.close();
 
       return res.status(400).json({ error: true, message: error.message });
     }
@@ -62,6 +66,7 @@ class ClientsController {
         address: { city, state, street, district, numberOf, postcode },
         bloodtype,
       } = req.body;
+      await typeOrmConnection.create();
 
       const newAddress = new Address();
 
@@ -99,8 +104,11 @@ class ClientsController {
 
       await client.save();
 
+      await typeOrmConnection.close();
+
       return res.status(201).end();
     } catch (error) {
+      await typeOrmConnection.close();
       if (error instanceof QueryFailedError) {
         return res.status(400).json({
           error: true,
@@ -116,6 +124,7 @@ class ClientsController {
     try {
       const { id } = req.params;
       const data = req.body;
+      await typeOrmConnection.create();
 
       const clientRepository = getRepository(Client);
 
@@ -129,8 +138,11 @@ class ClientsController {
 
       await clientRepository.save(client);
 
+      await typeOrmConnection.close();
+
       return res.status(201).end();
     } catch (error) {
+      await typeOrmConnection.close();
       return res.status(400).json({ error: true, message: error.message });
     }
   }
@@ -138,12 +150,15 @@ class ClientsController {
   async remove(req: Request, res: Response) {
     try {
       const { id } = req.params;
+      await typeOrmConnection.create();
 
       const clientsRepository = getRepository(Client);
 
       const client = await clientsRepository.findOne(id);
 
       await client?.remove();
+
+      await typeOrmConnection.close();
 
       return res.status(200).end();
     } catch (error) {

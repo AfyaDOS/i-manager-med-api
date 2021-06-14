@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
+import typeOrmConnection from '../../database';
 import Service from '../../database/entity/Service';
 
 class ServiceController {
@@ -7,14 +8,20 @@ class ServiceController {
     try {
       const data = req.body;
 
+      await typeOrmConnection.create();
+
       const service = new Service();
 
       Object.assign(service, data);
 
       await service.save();
 
+      await typeOrmConnection.close();
+
       return res.status(200).end();
     } catch (error) {
+      console.log(error);
+      await typeOrmConnection.close();
       return res.status(400).json({
         error: true,
         message: error.message,
@@ -24,6 +31,8 @@ class ServiceController {
 
   async getAll(req: Request, res: Response) {
     try {
+      await typeOrmConnection.create();
+
       const serviceRepository = getRepository(Service);
 
       const { date } = req.query;
@@ -54,12 +63,15 @@ class ServiceController {
         .getMany();
 
       if (clients.length === 0) {
+        await typeOrmConnection.close();
         return res.status(200).json([]);
       }
 
+      await typeOrmConnection.close();
+
       return res.status(200).json(clients);
     } catch (error) {
-      console.log(error);
+      await typeOrmConnection.close();
 
       return res.status(400).json({ error: true, message: error.message });
     }

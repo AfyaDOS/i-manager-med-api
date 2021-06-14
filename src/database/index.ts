@@ -1,8 +1,8 @@
 import { Connection, createConnection, getConnection, getConnectionOptions } from 'typeorm';
 
-let defaultConnection: Connection;
+let defaultConnection: Connection | undefined;
 
-const connection = {
+const typeOrmConnection = {
   async create() {
     try {
       const connectionOptions = await getConnectionOptions(
@@ -15,15 +15,18 @@ const connection = {
 
       return defaultConnection;
     } catch (error) {
-      throw new Error(error.message);
+      defaultConnection = undefined;
     }
   },
 
   async close() {
     try {
-      if (defaultConnection?.isConnected) await defaultConnection.close();
+      if (defaultConnection?.isConnected) {
+        await defaultConnection.close();
+        defaultConnection = undefined;
+      }
     } catch (error) {
-      throw new Error(error.message);
+      defaultConnection = undefined;
     }
   },
 
@@ -44,6 +47,4 @@ const connection = {
   },
 };
 
-connection.create().then(() => console.log('Database is connected'));
-
-export default connection;
+export default typeOrmConnection;
