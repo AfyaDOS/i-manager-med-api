@@ -2,23 +2,23 @@
 
 ## Grupo Afyados - Afya Labs
 
-# Links
+## Links
 
 - GitHub - https://github.com/AfyaDOS/i-manager-med-api
 - Heroku - https://imanagermed.herokuapp.com/(*rotas-documentação*)
 
-# Documentação Swagger
+## Documentação Swagger
 
 - https://imanagermed.herokuapp.com/documentation/
 
-# Comandos para rodar localmente
+## Comandos para rodar localmente
 
 - Clonar - git clone https://github.com/AfyaDOS/i-manager-med-api.git
 - Instalar as dependências - Yarn
 - Para Rodar(porta 5000) - Yarn Dev
 - Testes Jest - Yarn Test
 
-# Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 - Typescript
 - Express
